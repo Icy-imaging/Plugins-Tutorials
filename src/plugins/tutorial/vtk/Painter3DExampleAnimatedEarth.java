@@ -21,8 +21,9 @@ package plugins.tutorial.vtk;
 import icy.canvas.Canvas2D;
 import icy.canvas.Canvas3D;
 import icy.canvas.IcyCanvas;
-import icy.painter.Painter;
+import icy.painter.AbstractPainter;
 import icy.plugin.abstract_.Plugin;
+import icy.plugin.interface_.PluginImageAnalysis;
 import icy.sequence.Sequence;
 
 import java.awt.Graphics2D;
@@ -43,215 +44,195 @@ import vtk.vtkRenderer;
 /**
  * @author stephane
  */
-public class Painter3DExampleAnimatedEarth extends Plugin implements Painter, ActionListener
+public class Painter3DExampleAnimatedEarth extends Plugin implements PluginImageAnalysis
 {
-    final Sequence seq;
-
-    // vtk objects
-    private vtkEarthSource earth;
-    private vtkPolyDataMapper earthMapper;
-    private vtkActor earthActor;
-    vtkRenderer renderer;
-
-    private boolean initialized;
-
-    private double posX, posY, posZ;
-
-    public Painter3DExampleAnimatedEarth()
+    private static class AnimatedEarth3DPainter extends AbstractPainter implements ActionListener
     {
-        initialized = false;
+        final Sequence seq;
 
-        seq = getFocusedSequence();
+        // vtk objects
+        private vtkEarthSource earth;
+        private vtkPolyDataMapper earthMapper;
+        private vtkActor earthActor;
+        vtkRenderer renderer;
 
-        // add painter to the sequence
-        if (seq != null)
-            seq.addPainter(this);
+        private boolean initialized;
 
-        final Timer t = new Timer(20, this);
-        t.start();
-    }
+        private double posX, posY, posZ;
 
-    // init vtk objects
-    private void init()
-    {
-        earth = new vtkEarthSource();
-        earth.SetOnRatio(earth.GetOnRatioMaxValue()); // ( 1 to 16 )
-        earth.OutlineOn();
-        earth.SetRadius(150);
-
-        earthMapper = new vtkPolyDataMapper();
-        earthMapper.SetInput(earth.GetOutput());
-
-        earthActor = new vtkActor();
-        earthActor.SetMapper(earthMapper);
-
-        posX = posY = posZ = 0;
-    }
-
-    // deinit vtk objects
-    private void deinit()
-    {
-        earthActor.Delete();
-        earthMapper.Delete();
-        earth.Delete();
-    }
-
-    private vtkActor findActor(vtkRenderer renderer, vtkActor actor)
-    {
-        final vtkActorCollection actors = renderer.GetActors();
-
-        // search if actor already present in render
-        actors.InitTraversal();
-        for (int i = 0; i < actors.GetNumberOfItems(); i++)
+        public AnimatedEarth3DPainter(Sequence sequence)
         {
-            final vtkActor curactor = actors.GetNextActor();
+            initialized = false;
 
-            // already present --> exit
-            if (curactor == actor)
-                return curactor;
+            seq = sequence;
 
-            // curactor.InitPathTraversal();
-            // for (int j = 0; j < curactor.GetNumberOfPaths(); j++)
-            // {
-            // final vtkAssemblyPath curpath = curactor.GetNextPath();
-            //
-            // // already present --> exit
-            // if (curpath == actor)
-            // return curpart;
-            // }
+            // add painter to the sequence
+            if (seq != null)
+                seq.addPainter(this);
+
+            final Timer t = new Timer(20, this);
+            t.start();
         }
 
-        return null;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see icy.gui.painter.Painter#paint(icy.sequence.Sequence, java.awt.Graphics,
-     * icy.gui.canvas.IcyCanvas)
-     */
-    @Override
-    public void paint(Graphics2D g, Sequence sequence, IcyCanvas canvas)
-    {
-        if (canvas instanceof Canvas3D)
+        // init vtk objects
+        private void init()
         {
-            // 3D canvas
-            final Canvas3D canvas3d = (Canvas3D) canvas;
-            renderer = canvas3d.getRenderer();
+            earth = new vtkEarthSource();
+            earth.SetOnRatio(earth.GetOnRatioMaxValue()); // ( 1 to 16 )
+            earth.OutlineOn();
+            earth.SetRadius(150);
 
-            if (!initialized)
-            {
-                init();
-                initialized = true;
-            }
+            earthMapper = new vtkPolyDataMapper();
+            earthMapper.SetInput(earth.GetOutput());
 
-            // try to get earth actor from renderer
-            vtkActor actor = findActor(renderer, earthActor);
-            // actor not found ?
-            if (actor == null)
-            {
-                // add actor to renderer
-                renderer.AddActor(earthActor);
-                actor = earthActor;
-            }
+            earthActor = new vtkActor();
+            earthActor.SetMapper(earthMapper);
 
-            // update position
-            actor.SetOrientation(posX, posY, posZ);
+            posX = posY = posZ = 0;
         }
-        else if (canvas instanceof Canvas2D)
+
+        // deinit vtk objects
+        private void deinit()
         {
-            // 2D canvas
-            final Canvas2D canvas2d = (Canvas2D) canvas;
+            earthActor.Delete();
+            earthMapper.Delete();
+            earth.Delete();
+        }
 
-            if (initialized)
+        private vtkActor findActor(vtkRenderer renderer, vtkActor actor)
+        {
+            final vtkActorCollection actors = renderer.GetActors();
+
+            // search if actor already present in render
+            actors.InitTraversal();
+            for (int i = 0; i < actors.GetNumberOfItems(); i++)
             {
-                deinit();
-                initialized = false;
+                final vtkActor curactor = actors.GetNextActor();
+
+                // already present --> exit
+                if (curactor == actor)
+                    return curactor;
+
+                // curactor.InitPathTraversal();
+                // for (int j = 0; j < curactor.GetNumberOfPaths(); j++)
+                // {
+                // final vtkAssemblyPath curpath = curactor.GetNextPath();
+                //
+                // // already present --> exit
+                // if (curpath == actor)
+                // return curpart;
+                // }
             }
+
+            return null;
+        }
+
+        @Override
+        public void paint(Graphics2D g, Sequence sequence, IcyCanvas canvas)
+        {
+            if (canvas instanceof Canvas3D)
+            {
+                // 3D canvas
+                final Canvas3D canvas3d = (Canvas3D) canvas;
+                renderer = canvas3d.getRenderer();
+
+                if (!initialized)
+                {
+                    init();
+                    initialized = true;
+                }
+
+                // try to get earth actor from renderer
+                vtkActor actor = findActor(renderer, earthActor);
+                // actor not found ?
+                if (actor == null)
+                {
+                    // add actor to renderer
+                    renderer.AddActor(earthActor);
+                    actor = earthActor;
+                }
+
+                // update position
+                actor.SetOrientation(posX, posY, posZ);
+            }
+            else if (canvas instanceof Canvas2D)
+            {
+                // 2D canvas
+                final Canvas2D canvas2d = (Canvas2D) canvas;
+
+                if (initialized)
+                {
+                    deinit();
+                    initialized = false;
+                }
+            }
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            posX += 1;
+            // refresh painter (this will called 'paint' at some point)
+            seq.painterChanged(this);
+            // earthActor.SetOrientation(posX, posY, posZ);
+            // earth.Update();
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e, Point2D imagePoint, IcyCanvas canvas)
+        {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void mouseClick(MouseEvent e, Point2D p, IcyCanvas canvas)
+        {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void mouseDrag(MouseEvent e, Point2D p, IcyCanvas canvas)
+        {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void mouseMove(MouseEvent e, Point2D p, IcyCanvas canvas)
+        {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e, Point2D imagePoint, IcyCanvas canvas)
+        {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e, Point2D imagePoint, IcyCanvas canvas)
+        {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e, Point2D imagePoint, IcyCanvas canvas)
+        {
+            // TODO Auto-generated method stub
+
         }
     }
 
     @Override
-    public void actionPerformed(ActionEvent e)
+    public void compute()
     {
-        posX += 1;
-        // refresh painter (this will called 'paint' at some point)
-        seq.painterChanged(this);
-        // earthActor.SetOrientation(posX, posY, posZ);
-        // earth.Update();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see icy.gui.painter.Painter#keyPressed(java.awt.Point, java.awt.event.KeyEvent,
-     * icy.gui.canvas.IcyCanvas)
-     */
-    @Override
-    public void keyPressed(KeyEvent e, Point2D imagePoint, IcyCanvas canvas)
-    {
-        // TODO Auto-generated method stub
-
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see icy.gui.painter.Painter#mouseClick(java.awt.Point, java.awt.event.MouseEvent,
-     * icy.gui.canvas.IcyCanvas)
-     */
-    @Override
-    public void mouseClick(MouseEvent e, Point2D p, IcyCanvas canvas)
-    {
-        // TODO Auto-generated method stub
-
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see icy.gui.painter.Painter#mouseDrag(java.awt.Point, java.awt.event.MouseEvent,
-     * icy.gui.canvas.IcyCanvas)
-     */
-    @Override
-    public void mouseDrag(MouseEvent e, Point2D p, IcyCanvas canvas)
-    {
-        // TODO Auto-generated method stub
-
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see icy.gui.painter.Painter#mouseMove(java.awt.Point, java.awt.event.MouseEvent,
-     * icy.gui.canvas.IcyCanvas)
-     */
-    @Override
-    public void mouseMove(MouseEvent e, Point2D p, IcyCanvas canvas)
-    {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e, Point2D imagePoint, IcyCanvas canvas)
-    {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e, Point2D imagePoint, IcyCanvas canvas)
-    {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e, Point2D imagePoint, IcyCanvas canvas)
-    {
-        // TODO Auto-generated method stub
-
+        // create painter
+        new AnimatedEarth3DPainter(getFocusedSequence());
     }
 
 }

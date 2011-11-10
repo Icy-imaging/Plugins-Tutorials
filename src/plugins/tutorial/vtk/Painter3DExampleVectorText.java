@@ -21,8 +21,9 @@ package plugins.tutorial.vtk;
 import icy.canvas.Canvas2D;
 import icy.canvas.Canvas3D;
 import icy.canvas.IcyCanvas;
-import icy.painter.Painter;
+import icy.painter.AbstractPainter;
 import icy.plugin.abstract_.Plugin;
+import icy.plugin.interface_.PluginImageAnalysis;
 import icy.sequence.Sequence;
 
 import java.awt.Graphics2D;
@@ -38,141 +39,150 @@ import vtk.vtkVectorText;
 /**
  * @author stephane
  */
-public class Painter3DExampleVectorText extends Plugin implements Painter
+public class Painter3DExampleVectorText extends Plugin implements PluginImageAnalysis
 {
-    final Sequence seq;
-
-    private boolean initialized;
-
-    public Painter3DExampleVectorText()
+    private static class VectorText3DPainter extends AbstractPainter
     {
-        initialized = false;
+        final Sequence seq;
 
-        seq = getFocusedSequence();
+        private boolean initialized;
 
-        // add painter to the sequence
-        if (seq != null)
-            seq.addPainter(this);
-    }
-
-    // init vtk objects
-    private void init(vtkRenderer renderer)
-    {
-        // Create the 3D text and the associated mapper and follower (a type of actor)
-        // Position the text so it is displayed over the origin of the axes.
-        final vtkVectorText atext = new vtkVectorText();
-        atext.SetText("Origin");
-
-        final vtkPolyDataMapper textMapper = new vtkPolyDataMapper();
-        textMapper.SetInput(atext.GetOutput());
-
-        final vtkFollower textActor = new vtkFollower();
-        textActor.SetMapper(textMapper);
-        textActor.SetScale(100, 100, 100);
-        // textActor.AddPosition(0, -0.1, 0);
-
-        renderer.AddActor(textActor);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see icy.gui.painter.Painter#paint(icy.sequence.Sequence, java.awt.Graphics,
-     * icy.gui.canvas.IcyCanvas)
-     */
-    @Override
-    public void paint(Graphics2D g, Sequence sequence, IcyCanvas canvas)
-    {
-        if (canvas instanceof Canvas3D)
+        public VectorText3DPainter(Sequence sequence)
         {
-            // 3D canvas
-            final Canvas3D canvas3d = (Canvas3D) canvas;
+            initialized = false;
 
-            if (!initialized)
+            seq = sequence;
+
+            // add painter to the sequence
+            if (seq != null)
+                seq.addPainter(this);
+        }
+
+        // init vtk objects
+        private void init(vtkRenderer renderer)
+        {
+            // Create the 3D text and the associated mapper and follower (a type of actor)
+            // Position the text so it is displayed over the origin of the axes.
+            final vtkVectorText atext = new vtkVectorText();
+            atext.SetText("Origin");
+
+            final vtkPolyDataMapper textMapper = new vtkPolyDataMapper();
+            textMapper.SetInput(atext.GetOutput());
+
+            final vtkFollower textActor = new vtkFollower();
+            textActor.SetMapper(textMapper);
+            textActor.SetScale(100, 100, 100);
+            // textActor.AddPosition(0, -0.1, 0);
+
+            renderer.AddActor(textActor);
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see icy.gui.painter.Painter#paint(icy.sequence.Sequence, java.awt.Graphics,
+         * icy.gui.canvas.IcyCanvas)
+         */
+        @Override
+        public void paint(Graphics2D g, Sequence sequence, IcyCanvas canvas)
+        {
+            if (canvas instanceof Canvas3D)
             {
-                init(canvas3d.getRenderer());
-                initialized = true;
+                // 3D canvas
+                final Canvas3D canvas3d = (Canvas3D) canvas;
+
+                if (!initialized)
+                {
+                    init(canvas3d.getRenderer());
+                    initialized = true;
+                }
+            }
+            else if (canvas instanceof Canvas2D)
+            {
+                // 2D canvas
+                final Canvas2D canvas2d = (Canvas2D) canvas;
+
             }
         }
-        else if (canvas instanceof Canvas2D)
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see icy.gui.painter.Painter#keyPressed(java.awt.Point, java.awt.event.KeyEvent,
+         * icy.gui.canvas.IcyCanvas)
+         */
+        @Override
+        public void keyPressed(KeyEvent e, Point2D imagePoint, IcyCanvas canvas)
         {
-            // 2D canvas
-            final Canvas2D canvas2d = (Canvas2D) canvas;
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see icy.gui.painter.Painter#mouseClick(java.awt.Point, java.awt.event.MouseEvent,
+         * icy.gui.canvas.IcyCanvas)
+         */
+        @Override
+        public void mouseClick(MouseEvent e, Point2D p, IcyCanvas canvas)
+        {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see icy.gui.painter.Painter#mouseDrag(java.awt.Point, java.awt.event.MouseEvent,
+         * icy.gui.canvas.IcyCanvas)
+         */
+        @Override
+        public void mouseDrag(MouseEvent e, Point2D p, IcyCanvas canvas)
+        {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see icy.gui.painter.Painter#mouseMove(java.awt.Point, java.awt.event.MouseEvent,
+         * icy.gui.canvas.IcyCanvas)
+         */
+        @Override
+        public void mouseMove(MouseEvent e, Point2D p, IcyCanvas canvas)
+        {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e, Point2D imagePoint, IcyCanvas canvas)
+        {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e, Point2D imagePoint, IcyCanvas canvas)
+        {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e, Point2D imagePoint, IcyCanvas canvas)
+        {
+            // TODO Auto-generated method stub
 
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see icy.gui.painter.Painter#keyPressed(java.awt.Point, java.awt.event.KeyEvent,
-     * icy.gui.canvas.IcyCanvas)
-     */
     @Override
-    public void keyPressed(KeyEvent e, Point2D imagePoint, IcyCanvas canvas)
+    public void compute()
     {
-        // TODO Auto-generated method stub
-
+        // create painter
+        new VectorText3DPainter(getFocusedSequence());
     }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see icy.gui.painter.Painter#mouseClick(java.awt.Point, java.awt.event.MouseEvent,
-     * icy.gui.canvas.IcyCanvas)
-     */
-    @Override
-    public void mouseClick(MouseEvent e, Point2D p, IcyCanvas canvas)
-    {
-        // TODO Auto-generated method stub
-
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see icy.gui.painter.Painter#mouseDrag(java.awt.Point, java.awt.event.MouseEvent,
-     * icy.gui.canvas.IcyCanvas)
-     */
-    @Override
-    public void mouseDrag(MouseEvent e, Point2D p, IcyCanvas canvas)
-    {
-        // TODO Auto-generated method stub
-
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see icy.gui.painter.Painter#mouseMove(java.awt.Point, java.awt.event.MouseEvent,
-     * icy.gui.canvas.IcyCanvas)
-     */
-    @Override
-    public void mouseMove(MouseEvent e, Point2D p, IcyCanvas canvas)
-    {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e, Point2D imagePoint, IcyCanvas canvas)
-    {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e, Point2D imagePoint, IcyCanvas canvas)
-    {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e, Point2D imagePoint, IcyCanvas canvas)
-    {
-        // TODO Auto-generated method stub
-
-    }
-
 }

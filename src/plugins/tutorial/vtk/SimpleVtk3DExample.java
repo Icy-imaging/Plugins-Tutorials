@@ -34,8 +34,6 @@ import vtk.vtkPolyDataMapper;
  */
 public class SimpleVtk3DExample extends Plugin implements PluginImageAnalysis
 {
-
-    private static final long serialVersionUID = 2105550724619211479L;
     private final vtkPanel renWin;
 
     public SimpleVtk3DExample()
