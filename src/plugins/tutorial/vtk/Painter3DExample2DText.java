@@ -28,8 +28,6 @@ import icy.vtk.VtkUtil;
 
 import java.awt.Graphics2D;
 
-import vtk.vtkActor2D;
-import vtk.vtkRenderer;
 import vtk.vtkTextActor;
 import vtk.vtkTextProperty;
 
@@ -44,14 +42,15 @@ public class Painter3DExample2DText extends Plugin implements PluginImageAnalysi
     {
         // vtk object
         private vtkTextActor textActor;
-        private boolean initialized;
 
         public Text2DPainter(Sequence sequence)
         {
-            super(sequence);
+            super();
 
-            initialized = false;
-            textActor = null;
+            init();
+
+            // attach to sequence only when init is done
+            attachTo(sequence);
         }
 
         // init vtk objects
@@ -80,21 +79,8 @@ public class Painter3DExample2DText extends Plugin implements PluginImageAnalysi
         {
             if (canvas instanceof Canvas3D)
             {
-                // 3D canvas
-                final Canvas3D canvas3d = (Canvas3D) canvas;
-                final vtkRenderer renderer = canvas3d.getRenderer();
-
-                if (!initialized)
-                {
-                    init();
-                    initialized = true;
-                }
-
-                // find actor in renderer
-                final vtkActor2D actor = VtkUtil.findActor2D(renderer, textActor);
-                // actor lost ? --> add it to renderer
-                if (actor == null)
-                    renderer.AddActor(textActor);
+                // add actor to the renderer if not already exist
+                VtkUtil.addActor2D(((Canvas3D) canvas).getRenderer(), textActor);
             }
         }
     }

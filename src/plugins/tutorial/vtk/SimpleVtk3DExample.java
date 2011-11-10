@@ -38,7 +38,6 @@ public class SimpleVtk3DExample extends Plugin implements PluginImageAnalysis
 
     public SimpleVtk3DExample()
     {
-
         System.out.println("This example displays a cone in its own window.");
 
         // Setup VTK rendering panel

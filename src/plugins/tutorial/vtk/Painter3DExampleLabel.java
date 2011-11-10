@@ -18,18 +18,15 @@
  */
 package plugins.tutorial.vtk;
 
-import icy.canvas.Canvas2D;
 import icy.canvas.Canvas3D;
 import icy.canvas.IcyCanvas;
 import icy.painter.AbstractPainter;
 import icy.plugin.abstract_.Plugin;
 import icy.plugin.interface_.PluginImageAnalysis;
 import icy.sequence.Sequence;
+import icy.vtk.VtkUtil;
 
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
 
 import vtk.vtkActor2D;
 import vtk.vtkCubeSource;
@@ -44,32 +41,29 @@ public class Painter3DExampleLabel extends Plugin implements PluginImageAnalysis
 {
     private static class Label3DPainter extends AbstractPainter
     {
-        final Sequence seq;
-
-        private boolean initialized;
+        private vtkActor2D pointLabels;
+        private vtkSelectVisiblePoints visPts;
 
         public Label3DPainter(Sequence sequence)
         {
-            initialized = false;
+            super();
 
-            seq = sequence;
+            init();
 
-            // add painter to the sequence
-            if (seq != null)
-                seq.addPainter(this);
+            // attach to sequence only when init is done
+            attachTo(sequence);
         }
 
         // init vtk objects
-        private void init(vtkRenderer renderer)
+        private void init()
         {
             // labellers to display coordinates
             final vtkCubeSource cubeSource = new vtkCubeSource();
             cubeSource.SetBounds(0, 50, 100, 150, 300, 200);
 
             // Create labels for points
-            final vtkSelectVisiblePoints visPts = new vtkSelectVisiblePoints();
+            visPts = new vtkSelectVisiblePoints();
             visPts.SetInput(cubeSource.GetOutput());
-            visPts.SetRenderer(renderer);
 
             // Create the mapper to display the point ids. Specify the format to
             // use for the labels. Also create the associated actor.
@@ -79,111 +73,23 @@ public class Painter3DExampleLabel extends Plugin implements PluginImageAnalysis
             ldm.SetLabelFormat("%g");
             ldm.SetLabelModeToLabelFieldData();
 
-            final vtkActor2D pointLabels = new vtkActor2D();
+            pointLabels = new vtkActor2D();
             pointLabels.SetMapper(ldm);
-
-            renderer.AddActor(pointLabels);
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see icy.gui.painter.Painter#paint(icy.sequence.Sequence, java.awt.Graphics,
-         * icy.gui.canvas.IcyCanvas)
-         */
         @Override
         public void paint(Graphics2D g, Sequence sequence, IcyCanvas canvas)
         {
             if (canvas instanceof Canvas3D)
             {
-                // 3D canvas
-                final Canvas3D canvas3d = (Canvas3D) canvas;
+                final vtkRenderer renderer = ((Canvas3D) canvas).getRenderer();
 
-                if (!initialized)
-                {
-                    init(canvas3d.getRenderer());
-                    initialized = true;
-                }
+                if (visPts.GetRenderer() == null)
+                    visPts.SetRenderer(renderer);
+
+                // add actor to the renderer if not already exist
+                VtkUtil.addActor2D(renderer, pointLabels);
             }
-            else if (canvas instanceof Canvas2D)
-            {
-                // 2D canvas
-                final Canvas2D canvas2d = (Canvas2D) canvas;
-
-            }
-        }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see icy.gui.painter.Painter#keyPressed(java.awt.Point, java.awt.event.KeyEvent,
-         * icy.gui.canvas.IcyCanvas)
-         */
-        @Override
-        public void keyPressed(KeyEvent e, Point2D imagePoint, IcyCanvas canvas)
-        {
-            // TODO Auto-generated method stub
-
-        }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see icy.gui.painter.Painter#mouseClick(java.awt.Point, java.awt.event.MouseEvent,
-         * icy.gui.canvas.IcyCanvas)
-         */
-        @Override
-        public void mouseClick(MouseEvent e, Point2D p, IcyCanvas canvas)
-        {
-            // TODO Auto-generated method stub
-
-        }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see icy.gui.painter.Painter#mouseDrag(java.awt.Point, java.awt.event.MouseEvent,
-         * icy.gui.canvas.IcyCanvas)
-         */
-        @Override
-        public void mouseDrag(MouseEvent e, Point2D p, IcyCanvas canvas)
-        {
-            // TODO Auto-generated method stub
-
-        }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see icy.gui.painter.Painter#mouseMove(java.awt.Point, java.awt.event.MouseEvent,
-         * icy.gui.canvas.IcyCanvas)
-         */
-        @Override
-        public void mouseMove(MouseEvent e, Point2D p, IcyCanvas canvas)
-        {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e, Point2D imagePoint, IcyCanvas canvas)
-        {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e, Point2D imagePoint, IcyCanvas canvas)
-        {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e, Point2D imagePoint, IcyCanvas canvas)
-        {
-            // TODO Auto-generated method stub
-
         }
     }
 

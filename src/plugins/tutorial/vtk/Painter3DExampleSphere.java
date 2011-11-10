@@ -18,22 +18,18 @@
  */
 package plugins.tutorial.vtk;
 
-import icy.canvas.Canvas2D;
 import icy.canvas.Canvas3D;
 import icy.canvas.IcyCanvas;
 import icy.painter.AbstractPainter;
 import icy.plugin.abstract_.Plugin;
 import icy.plugin.interface_.PluginImageAnalysis;
 import icy.sequence.Sequence;
+import icy.vtk.VtkUtil;
 
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
 
 import vtk.vtkActor;
 import vtk.vtkPolyDataMapper;
-import vtk.vtkRenderer;
 import vtk.vtkSphereSource;
 
 /**
@@ -43,23 +39,20 @@ public class Painter3DExampleSphere extends Plugin implements PluginImageAnalysi
 {
     private static class Sphere3DPainter extends AbstractPainter
     {
-        final Sequence seq;
-
-        private boolean initialized;
+        private vtkActor aSphere;
 
         public Sphere3DPainter(Sequence sequence)
         {
-            initialized = false;
+            super();
 
-            seq = sequence;
+            init();
 
-            // add painter to the sequence
-            if (seq != null)
-                seq.addPainter(this);
+            // attach to sequence only when init is done
+            attachTo(sequence);
         }
 
         // init vtk objects
-        private void init(vtkRenderer renderer)
+        private void init()
         {
             // source
             final vtkSphereSource sphere = new vtkSphereSource();
@@ -72,112 +65,19 @@ public class Painter3DExampleSphere extends Plugin implements PluginImageAnalysi
             map.SetInput(sphere.GetOutput());
 
             // actor
-            final vtkActor aSphere = new vtkActor();
+            aSphere = new vtkActor();
             aSphere.SetMapper(map);
             aSphere.GetProperty().SetColor(0, 0, 1); // color blue
-
-            renderer.AddActor(aSphere);
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see icy.gui.painter.Painter#paint(icy.sequence.Sequence, java.awt.Graphics,
-         * icy.gui.canvas.IcyCanvas)
-         */
         @Override
         public void paint(Graphics2D g, Sequence sequence, IcyCanvas canvas)
         {
             if (canvas instanceof Canvas3D)
             {
-                // 3D canvas
-                final Canvas3D canvas3d = (Canvas3D) canvas;
-
-                if (!initialized)
-                {
-                    init(canvas3d.getRenderer());
-                    initialized = true;
-                }
+                // add actor to the renderer if not already exist
+                VtkUtil.addActor(((Canvas3D) canvas).getRenderer(), aSphere);
             }
-            else if (canvas instanceof Canvas2D)
-            {
-                // 2D canvas
-                final Canvas2D canvas2d = (Canvas2D) canvas;
-
-            }
-        }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see icy.gui.painter.Painter#keyPressed(java.awt.Point, java.awt.event.KeyEvent,
-         * icy.gui.canvas.IcyCanvas)
-         */
-        @Override
-        public void keyPressed(KeyEvent e, Point2D imagePoint, IcyCanvas canvas)
-        {
-            // TODO Auto-generated method stub
-
-        }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see icy.gui.painter.Painter#mouseClick(java.awt.Point, java.awt.event.MouseEvent,
-         * icy.gui.canvas.IcyCanvas)
-         */
-        @Override
-        public void mouseClick(MouseEvent e, Point2D p, IcyCanvas canvas)
-        {
-            // TODO Auto-generated method stub
-
-        }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see icy.gui.painter.Painter#mouseDrag(java.awt.Point, java.awt.event.MouseEvent,
-         * icy.gui.canvas.IcyCanvas)
-         */
-        @Override
-        public void mouseDrag(MouseEvent e, Point2D p, IcyCanvas canvas)
-        {
-            // TODO Auto-generated method stub
-
-        }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see icy.gui.painter.Painter#mouseMove(java.awt.Point, java.awt.event.MouseEvent,
-         * icy.gui.canvas.IcyCanvas)
-         */
-        @Override
-        public void mouseMove(MouseEvent e, Point2D p, IcyCanvas canvas)
-        {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e, Point2D imagePoint, IcyCanvas canvas)
-        {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e, Point2D imagePoint, IcyCanvas canvas)
-        {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e, Point2D imagePoint, IcyCanvas canvas)
-        {
-            // TODO Auto-generated method stub
-
         }
     }
 

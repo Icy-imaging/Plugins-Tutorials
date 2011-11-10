@@ -33,7 +33,6 @@ import vtk.vtkCellArray;
 import vtk.vtkPoints;
 import vtk.vtkPolyData;
 import vtk.vtkPolyDataMapper;
-import vtk.vtkRenderer;
 
 /**
  * This plugin shows how use VTK to render a simple cube mesh as a 3D painter
@@ -50,18 +49,18 @@ public class Painter3DExampleCube extends Plugin implements PluginImageAnalysis
                 {3, 6, 7}, {1, 5, 6}, {1, 6, 2}, {4, 0, 3}, {4, 3, 7}, {7, 6, 5}, {7, 5, 4}};
 
         private vtkActor cubeActor;
-        private boolean initialized;
 
         public Cube3DPainter(Sequence sequence)
         {
-            super(sequence);
+            super();
 
-            cubeActor = null;
-            initialized = false;
+            init();
+
+            // attach to sequence only when init is done
+            attachTo(sequence);
         }
 
-        // init vtk objects
-        private void init(vtkRenderer renderer)
+        private void init()
         {
             // vertex data
             final vtkPoints points;
@@ -83,9 +82,9 @@ public class Painter3DExampleCube extends Plugin implements PluginImageAnalysis
             // add actor to the renderer
             final vtkPolyDataMapper polyMapper = new vtkPolyDataMapper();
             polyMapper.SetInput(polyData);
+
             cubeActor = new vtkActor();
             cubeActor.SetMapper(polyMapper);
-            renderer.AddActor(cubeActor);
         }
 
         @Override
@@ -93,23 +92,8 @@ public class Painter3DExampleCube extends Plugin implements PluginImageAnalysis
         {
             if (canvas instanceof Canvas3D)
             {
-                // 3D canvas
-                final Canvas3D canvas3d = (Canvas3D) canvas;
-                // get the VTK renderer object
-                final vtkRenderer renderer = canvas3d.getRenderer();
-
-                // initialize our 3D data on first paint call
-                if (!initialized)
-                {
-                    init(renderer);
-                    initialized = true;
-                }
-
-                // find actor in renderer
-                vtkActor actor = VtkUtil.findActor(renderer, cubeActor);
-                // actor lost ? --> add it to renderer
-                if (actor == null)
-                    renderer.AddActor(cubeActor);
+                // add actor to the renderer if not already exist
+                VtkUtil.addActor(((Canvas3D) canvas).getRenderer(), cubeActor);
             }
         }
     }
