@@ -18,30 +18,27 @@
  */
 package plugins.tutorial.vtk;
 
-import icy.canvas.Canvas3D;
-import icy.canvas.IcyCanvas;
 import icy.painter.AbstractPainter;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.painter.VtkPainter;
+import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
-import icy.vtk.VtkUtil;
 
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
 import vtk.vtkActor;
+import vtk.vtkActor2D;
 import vtk.vtkEarthSource;
 import vtk.vtkPolyDataMapper;
 
 /**
  * @author stephane
  */
-public class Painter3DExampleAnimatedEarth extends Plugin implements PluginImageAnalysis
+public class Painter3DExampleAnimatedEarth extends PluginActionable
 {
-    private static class AnimatedEarth3DPainter extends AbstractPainter implements ActionListener
+    private static class AnimatedEarth3DPainter extends AbstractPainter implements ActionListener, VtkPainter
     {
         // vtk object
         private vtkActor earthActor;
@@ -78,16 +75,6 @@ public class Painter3DExampleAnimatedEarth extends Plugin implements PluginImage
         }
 
         @Override
-        public void paint(Graphics2D g, Sequence sequence, IcyCanvas canvas)
-        {
-            if (canvas instanceof Canvas3D)
-            {
-                // add actor to the renderer if not already exist
-                VtkUtil.addActor(((Canvas3D) canvas).getRenderer(), earthActor);
-            }
-        }
-
-        @Override
         public void actionPerformed(ActionEvent e)
         {
             // update position
@@ -97,10 +84,22 @@ public class Painter3DExampleAnimatedEarth extends Plugin implements PluginImage
             for (Sequence seq : getSequences())
                 seq.painterChanged(this);
         }
+
+        @Override
+        public vtkActor[] getActors()
+        {
+            return new vtkActor[] {earthActor};
+        }
+
+        @Override
+        public vtkActor2D[] getActors2D()
+        {
+            return new vtkActor2D[] {};
+        }
     }
 
     @Override
-    public void compute()
+    public void run()
     {
         // create painter
         new AnimatedEarth3DPainter(getFocusedSequence());

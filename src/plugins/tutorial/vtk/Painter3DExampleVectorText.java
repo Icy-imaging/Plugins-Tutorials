@@ -18,16 +18,12 @@
  */
 package plugins.tutorial.vtk;
 
-import icy.canvas.Canvas3D;
-import icy.canvas.IcyCanvas;
 import icy.painter.AbstractPainter;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.painter.VtkPainter;
+import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
-import icy.vtk.VtkUtil;
-
-import java.awt.Graphics2D;
-
+import vtk.vtkActor;
+import vtk.vtkActor2D;
 import vtk.vtkFollower;
 import vtk.vtkPolyDataMapper;
 import vtk.vtkVectorText;
@@ -35,9 +31,9 @@ import vtk.vtkVectorText;
 /**
  * @author stephane
  */
-public class Painter3DExampleVectorText extends Plugin implements PluginImageAnalysis
+public class Painter3DExampleVectorText extends PluginActionable
 {
-    private static class VectorText3DPainter extends AbstractPainter
+    private static class VectorText3DPainter extends AbstractPainter implements VtkPainter
     {
         private vtkFollower textActor;
 
@@ -69,18 +65,20 @@ public class Painter3DExampleVectorText extends Plugin implements PluginImageAna
         }
 
         @Override
-        public void paint(Graphics2D g, Sequence sequence, IcyCanvas canvas)
+        public vtkActor[] getActors()
         {
-            if (canvas instanceof Canvas3D)
-            {
-                // add actor to the renderer if not already exist
-                VtkUtil.addActor(((Canvas3D) canvas).getRenderer(), textActor);
-            }
+            return new vtkActor[] {textActor};
+        }
+
+        @Override
+        public vtkActor2D[] getActors2D()
+        {
+            return new vtkActor2D[] {};
         }
     }
 
     @Override
-    public void compute()
+    public void run()
     {
         // create painter
         new VectorText3DPainter(getFocusedSequence());

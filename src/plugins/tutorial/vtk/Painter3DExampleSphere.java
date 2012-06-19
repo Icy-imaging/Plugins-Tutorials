@@ -18,26 +18,21 @@
  */
 package plugins.tutorial.vtk;
 
-import icy.canvas.Canvas3D;
-import icy.canvas.IcyCanvas;
 import icy.painter.AbstractPainter;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.painter.VtkPainter;
+import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
-import icy.vtk.VtkUtil;
-
-import java.awt.Graphics2D;
-
 import vtk.vtkActor;
+import vtk.vtkActor2D;
 import vtk.vtkPolyDataMapper;
 import vtk.vtkSphereSource;
 
 /**
  * @author stephane
  */
-public class Painter3DExampleSphere extends Plugin implements PluginImageAnalysis
+public class Painter3DExampleSphere extends PluginActionable
 {
-    private static class Sphere3DPainter extends AbstractPainter
+    private static class Sphere3DPainter extends AbstractPainter implements VtkPainter
     {
         private vtkActor aSphere;
 
@@ -71,18 +66,20 @@ public class Painter3DExampleSphere extends Plugin implements PluginImageAnalysi
         }
 
         @Override
-        public void paint(Graphics2D g, Sequence sequence, IcyCanvas canvas)
+        public vtkActor[] getActors()
         {
-            if (canvas instanceof Canvas3D)
-            {
-                // add actor to the renderer if not already exist
-                VtkUtil.addActor(((Canvas3D) canvas).getRenderer(), aSphere);
-            }
+            return new vtkActor[] {aSphere};
+        }
+
+        @Override
+        public vtkActor2D[] getActors2D()
+        {
+            return new vtkActor2D[] {};
         }
     }
 
     @Override
-    public void compute()
+    public void run()
     {
         // create painter
         new Sphere3DPainter(getFocusedSequence());

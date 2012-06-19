@@ -18,26 +18,21 @@
  */
 package plugins.tutorial.vtk;
 
-import icy.canvas.Canvas3D;
-import icy.canvas.IcyCanvas;
 import icy.painter.AbstractPainter;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.painter.VtkPainter;
+import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
-import icy.vtk.VtkUtil;
-
-import java.awt.Graphics2D;
-
 import vtk.vtkActor;
+import vtk.vtkActor2D;
 import vtk.vtkAxes;
 import vtk.vtkPolyDataMapper;
 
 /**
  * @author stephane
  */
-public class Painter3DExampleAxes extends Plugin implements PluginImageAnalysis
+public class Painter3DExampleAxes extends PluginActionable
 {
-    private static class Axes3DPainter extends AbstractPainter
+    private static class Axes3DPainter extends AbstractPainter implements VtkPainter
     {
         // vtk object
         private vtkActor axesActor;
@@ -68,18 +63,20 @@ public class Painter3DExampleAxes extends Plugin implements PluginImageAnalysis
         }
 
         @Override
-        public void paint(Graphics2D g, Sequence sequence, IcyCanvas canvas)
+        public vtkActor[] getActors()
         {
-            if (canvas instanceof Canvas3D)
-            {
-                // add actor to the renderer if not already exist
-                VtkUtil.addActor(((Canvas3D) canvas).getRenderer(), axesActor);
-            }
+            return new vtkActor[] {axesActor};
+        }
+
+        @Override
+        public vtkActor2D[] getActors2D()
+        {
+            return new vtkActor2D[] {};
         }
     }
 
     @Override
-    public void compute()
+    public void run()
     {
         // create painter
         new Axes3DPainter(getFocusedSequence());

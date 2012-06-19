@@ -18,17 +18,12 @@
  */
 package plugins.tutorial.vtk;
 
-import icy.canvas.Canvas3D;
-import icy.canvas.IcyCanvas;
 import icy.painter.AbstractPainter;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.painter.VtkPainter;
+import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
-import icy.vtk.VtkUtil;
-
-import java.awt.Graphics2D;
-
 import vtk.vtkActor;
+import vtk.vtkActor2D;
 import vtk.vtkCardinalSpline;
 import vtk.vtkCellArray;
 import vtk.vtkGlyph3D;
@@ -42,9 +37,9 @@ import vtk.vtkTubeFilter;
 /**
  * @author stephane
  */
-public class Painter3DExampleComplexeSpline extends Plugin implements PluginImageAnalysis
+public class Painter3DExampleComplexeSpline extends PluginActionable
 {
-    private static class ComplexeSpline3DPainter extends AbstractPainter
+    private static class ComplexeSpline3DPainter extends AbstractPainter implements VtkPainter
     {
         // vtk object
         private vtkActor glyph;
@@ -161,19 +156,20 @@ public class Painter3DExampleComplexeSpline extends Plugin implements PluginImag
         }
 
         @Override
-        public void paint(Graphics2D g, Sequence sequence, IcyCanvas canvas)
+        public vtkActor[] getActors()
         {
-            if (canvas instanceof Canvas3D)
-            {
-                // add actors to the renderer if not already exist
-                VtkUtil.addActor(((Canvas3D) canvas).getRenderer(), glyph);
-                VtkUtil.addActor(((Canvas3D) canvas).getRenderer(), profile);
-            }
+            return new vtkActor[] {glyph, profile};
+        }
+
+        @Override
+        public vtkActor2D[] getActors2D()
+        {
+            return new vtkActor2D[] {};
         }
     }
 
     @Override
-    public void compute()
+    public void run()
     {
         // create painter
         new ComplexeSpline3DPainter(getFocusedSequence());

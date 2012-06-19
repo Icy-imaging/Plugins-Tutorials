@@ -21,13 +21,13 @@ package plugins.tutorial.vtk;
 import icy.canvas.Canvas3D;
 import icy.canvas.IcyCanvas;
 import icy.painter.AbstractPainter;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.painter.VtkPainter;
+import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
-import icy.vtk.VtkUtil;
 
 import java.awt.Graphics2D;
 
+import vtk.vtkActor;
 import vtk.vtkActor2D;
 import vtk.vtkCubeSource;
 import vtk.vtkLabeledDataMapper;
@@ -37,9 +37,9 @@ import vtk.vtkSelectVisiblePoints;
 /**
  * @author stephane
  */
-public class Painter3DExampleLabel extends Plugin implements PluginImageAnalysis
+public class Painter3DExampleLabel extends PluginActionable
 {
-    private static class Label3DPainter extends AbstractPainter
+    private static class Label3DPainter extends AbstractPainter implements VtkPainter
     {
         private vtkActor2D pointLabels;
         private vtkSelectVisiblePoints visPts;
@@ -86,15 +86,24 @@ public class Painter3DExampleLabel extends Plugin implements PluginImageAnalysis
 
                 if (visPts.GetRenderer() == null)
                     visPts.SetRenderer(renderer);
-
-                // add actor to the renderer if not already exist
-                VtkUtil.addActor2D(renderer, pointLabels);
             }
+        }
+
+        @Override
+        public vtkActor[] getActors()
+        {
+            return new vtkActor[] {};
+        }
+
+        @Override
+        public vtkActor2D[] getActors2D()
+        {
+            return new vtkActor2D[] {pointLabels};
         }
     }
 
     @Override
-    public void compute()
+    public void run()
     {
         // create painter
         new Label3DPainter(getFocusedSequence());

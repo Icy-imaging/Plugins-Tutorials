@@ -18,8 +18,7 @@
  */
 package plugins.tutorial.vtk;
 
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.plugin.abstract_.PluginActionable;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
@@ -32,7 +31,7 @@ import vtk.vtkPolyDataMapper;
 /**
  * A very basic application that simple displays a cone using vtkPanel. Fabrice de Chaumont
  */
-public class SimpleVtk3DExample extends Plugin implements PluginImageAnalysis
+public class SimpleVtk3DExample extends PluginActionable
 {
     private final vtkPanel renWin;
 
@@ -60,7 +59,6 @@ public class SimpleVtk3DExample extends Plugin implements PluginImageAnalysis
         coneActor.SetMapper(coneMapper);
 
         renWin.GetRenderer().AddActor(coneActor);
-
     }
 
     public vtkPanel getRenWin()
@@ -69,7 +67,7 @@ public class SimpleVtk3DExample extends Plugin implements PluginImageAnalysis
     }
 
     @Override
-    public void compute()
+    public void run()
     {
 
     }
