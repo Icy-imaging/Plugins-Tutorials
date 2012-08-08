@@ -25,8 +25,7 @@ import icy.gui.main.MainAdapter;
 import icy.gui.main.MainEvent;
 import icy.gui.main.MainListener;
 import icy.main.Icy;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.plugin.abstract_.PluginActionable;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -42,10 +41,10 @@ import javax.swing.ScrollPaneConstants;
  *              Painter added/removed, plugin started/closed, roi, focus, viewer (...)
  * \code
  * 
- * public class MainListenerUse extends Plugin implements PluginImageAnalysis
+public class MainListenerUse extends PluginActionable
 {
     @Override
-    public void compute()
+    public void run()
     {
         // build a simple titled frame
         final TitledFrame frame = new TitledFrame("Main Event logger", true, true);
@@ -182,10 +181,10 @@ import javax.swing.ScrollPaneConstants;
  * 
  */
 
-public class MainListenerUse extends Plugin implements PluginImageAnalysis
+public class MainListenerUse extends PluginActionable
 {
     @Override
-    public void compute()
+    public void run()
     {
         // build a simple titled frame
         final TitledFrame frame = new TitledFrame("Main Event logger", true, true);

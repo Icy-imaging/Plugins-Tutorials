@@ -153,11 +153,10 @@ import javax.swing.Timer;
     {
         mouse = (Point2D) imagePoint.clone();
     }
-
-
-
 }
  * \endcode
+ * 
+ * @formatter:off
  * 
  * @author Fabrice de Chaumont and Stephane Dallongeville
  *
@@ -269,7 +268,4 @@ public class OneMarkAnimatedPainter extends AbstractPainter implements ActionLis
     {
         mouse = (Point2D) imagePoint.clone();
     }
-
-
-
 }

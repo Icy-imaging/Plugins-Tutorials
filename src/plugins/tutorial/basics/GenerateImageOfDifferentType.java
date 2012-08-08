@@ -19,10 +19,9 @@
 package plugins.tutorial.basics;
 
 import icy.image.IcyBufferedImage;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
-import icy.type.TypeUtil;
+import icy.type.DataType;
 
 /**
  * This plugin generates image of all types supported by ICY.
@@ -34,10 +33,10 @@ import icy.type.TypeUtil;
  * \code
  * 
  * 
-public class GenerateImageOfDifferentType extends Plugin implements PluginImageAnalysis
+public class GenerateImageOfDifferentType extends PluginActionable
 {
     @Override
-    public void compute()
+    public void run()
     {
         // generate a FLOAT image ( 1 band )
         {
@@ -46,7 +45,7 @@ public class GenerateImageOfDifferentType extends Plugin implements PluginImageA
                     256, // height
                     1, // number of channels (note that channel is same as color components or color
                        // band)
-                    TypeUtil.TYPE_FLOAT);
+                    DataType.FLOAT);
 
             float[] dataBuffer = image.getDataXYAsFloat(0); // get a direct reference to first
                                                             // component data
@@ -214,31 +213,28 @@ public class GenerateImageOfDifferentType extends Plugin implements PluginImageA
  * 
  */
 
-public class GenerateImageOfDifferentType extends Plugin implements PluginImageAnalysis
+public class GenerateImageOfDifferentType extends PluginActionable
 {
     /**
      * @formatter:on
      */
     @Override
-    public void compute()
+    public void run()
     {
-        // generate a FLOAT image ( 1 band )
+        // generate a FLOAT image ( 1 channel )
         {
-            // create the image object
-            IcyBufferedImage image = new IcyBufferedImage(256, // width
-                    256, // height
-                    1, // number of channels (note that channel is same as color components or color
-                       // band)
-                    TypeUtil.TYPE_FLOAT);
+            // create the image object with the specified
+            // width, height, number of channel (sometime called component or band) and data type
+            IcyBufferedImage image = new IcyBufferedImage(256, 256, 1, DataType.FLOAT);
 
-            float[] dataBuffer = image.getDataXYAsFloat(0); // get a direct reference to first
-                                                            // component data
+            // get a direct reference to first component data
+            float[] dataBuffer = image.getDataXYAsFloat(0);
 
             // fill data
             for (int x = 0; x < 256; x++)
                 for (int y = 0; y < 256; y++)
-                    dataBuffer[x + y * 256] = (float) (Math.random() - 0.5); // directly assign to
-                                                                             // buffer
+                    // directly assign to buffer
+                    dataBuffer[x + y * 256] = (float) (Math.random() - 0.5);
 
             // notify to icy that data has changed to refresh internal state and display
             image.dataChanged();
@@ -250,49 +246,45 @@ public class GenerateImageOfDifferentType extends Plugin implements PluginImageA
             addSequence(sequence);
         }
 
-        // generate a BYTE image ( 1 band )
+        // generate a UNSIGNED BYTE image ( 1 channel )
         {
-            // create the image object
-            IcyBufferedImage image = new IcyBufferedImage(256, // width
-                    256, // height
-                    1, // number of channels (note that channel is same as color components or color
-                       // band)
-                    TypeUtil.TYPE_BYTE);
+            // create the image object with the specified
+            // width, height, number of channel (sometime called component or band) and data type
+            IcyBufferedImage image = new IcyBufferedImage(256, 256, 1, DataType.UBYTE);
 
-            byte[] dataBuffer = image.getDataXYAsByte(0); // get a direct reference to first
-                                                          // component data
+            // get a direct reference to first component data
+            byte[] dataBuffer = image.getDataXYAsByte(0);
 
             // fill data
             for (int x = 0; x < 256; x++)
                 for (int y = 0; y < 256; y++)
-                    dataBuffer[x + y * 256] = (byte) (x * y); // directly assign to buffer
+                    // directly assign to buffer
+                    dataBuffer[x + y * 256] = (byte) (x * y);
 
             // notify to icy that data has changed to refresh internal state and display
             image.dataChanged();
 
             // create a sequence
-            Sequence sequence = new Sequence("Byte Image", image);
+            Sequence sequence = new Sequence("Unsigned byte Image", image);
 
             // Create a viewer to watch the sequence.
             addSequence(sequence);
         }
 
-        // generate a INT image ( 1 band )
+        // generate a (signed) INT image ( 1 channel )
         {
-            // create the image object
-            IcyBufferedImage image = new IcyBufferedImage(256, // width
-                    256, // height
-                    1, // number of channels (note that channel is same as color components or color
-                       // band)
-                    TypeUtil.TYPE_INT);
+            // create the image object with the specified
+            // width, height, number of channel (sometime called component or band) and data type
+            IcyBufferedImage image = new IcyBufferedImage(256, 256, 1, DataType.INT);
 
-            int[] dataBuffer = image.getDataXYAsInt(0); // get a direct reference to first component
-                                                        // data
+            // get a direct reference to first component data
+            int[] dataBuffer = image.getDataXYAsInt(0);
 
             // fill data
             for (int x = 0; x < 256; x++)
                 for (int y = 0; y < 256; y++)
-                    dataBuffer[x + y * 256] = (int) (x * y); // directly assign to buffer
+                    // directly assign to buffer
+                    dataBuffer[x + y * 256] = x * y;
 
             // notify to icy that data has changed to refresh internal state and display
             image.dataChanged();
@@ -304,23 +296,20 @@ public class GenerateImageOfDifferentType extends Plugin implements PluginImageA
             addSequence(sequence);
         }
 
-        // generate a USHORT image ( 1 band )
+        // generate a UNISIGNED SHORT image ( 1 channel )
         {
-            // create the image object
-            IcyBufferedImage image = new IcyBufferedImage(256, // width
-                    256, // height
-                    1, // number of channels (note that channel is same as color components or color
-                       // band)
-                    TypeUtil.TYPE_SHORT, false // set as USHORT ( unsigned )
-            );
+            // create the image object with the specified
+            // width, height, number of channel (sometime called component or band) and data type
+            IcyBufferedImage image = new IcyBufferedImage(256, 256, 1, DataType.USHORT);
 
-            short[] dataBuffer = image.getDataXYAsShort(0); // get a direct reference to first
-                                                            // component data
+            // get a direct reference to first component data
+            short[] dataBuffer = image.getDataXYAsShort(0);
 
             // fill data
             for (int x = 0; x < 256; x++)
                 for (int y = 0; y < 256; y++)
-                    dataBuffer[x + y * 256] = (short) (x * y); // directly assign to buffer
+                    // directly assign to buffer
+                    dataBuffer[x + y * 256] = (short) (x * y);
 
             // notify to icy that data has changed to refresh internal state and display
             image.dataChanged();
@@ -332,23 +321,20 @@ public class GenerateImageOfDifferentType extends Plugin implements PluginImageA
             addSequence(sequence);
         }
 
-        // generate a SHORT image ( 1 band )
+        // generate a (signed) SHORT image ( 1 channel )
         {
-            // create the image object
-            IcyBufferedImage image = new IcyBufferedImage(256, // width
-                    256, // height
-                    1, // number of channels (note that channel is same as color components or color
-                       // band)
-                    TypeUtil.TYPE_SHORT, true // set as SHORT ( signed )
-            );
+            // create the image object with the specified
+            // width, height, number of channel (sometime called component or band) and data type
+            IcyBufferedImage image = new IcyBufferedImage(256, 256, 1, DataType.SHORT);
 
-            short[] dataBuffer = image.getDataXYAsShort(0); // get a direct reference to first
-                                                            // component data
+            // get a direct reference to first component data
+            short[] dataBuffer = image.getDataXYAsShort(0);
 
             // fill data
             for (int x = 0; x < 256; x++)
                 for (int y = 0; y < 256; y++)
-                    dataBuffer[x + y * 256] = (short) (x * y); // directly assign to buffer
+                    // directly assign to buffer
+                    dataBuffer[x + y * 256] = (short) (x * y);
 
             // notify to icy that data has changed to refresh internal state and display
             image.dataChanged();
@@ -360,23 +346,20 @@ public class GenerateImageOfDifferentType extends Plugin implements PluginImageA
             addSequence(sequence);
         }
 
-        // generate a DOUBLE image ( 1 band )
+        // generate a DOUBLE image ( 1 channel )
         {
-            // create the image object
-            IcyBufferedImage image = new IcyBufferedImage(256, // width
-                    256, // height
-                    1, // number of channels (note that channel is same as color components or color
-                       // band)
-                    TypeUtil.TYPE_DOUBLE);
+            // create the image object with the specified
+            // width, height, number of channel (sometime called component or band) and data type
+            IcyBufferedImage image = new IcyBufferedImage(256, 256, 1, DataType.DOUBLE);
 
-            double[] dataBuffer = image.getDataXYAsDouble(0); // get a direct reference to first
-                                                              // component data
+            // get a direct reference to first component data
+            double[] dataBuffer = image.getDataXYAsDouble(0);
 
             // fill data
             for (int x = 0; x < 256; x++)
                 for (int y = 0; y < 256; y++)
-                    dataBuffer[x + y * 256] = (double) (Math.random() - 0.5); // directly assign to
-                                                                              // buffer
+                    // directly assign to buffer
+                    dataBuffer[x + y * 256] = (Math.random() - 0.5);
 
             // notify to icy that data has changed to refresh internal state and display
             image.dataChanged();

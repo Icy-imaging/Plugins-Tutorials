@@ -27,8 +27,7 @@ import icy.gui.viewer.ViewerEvent.ViewerEventType;
 import icy.gui.viewer.ViewerListener;
 import icy.image.IcyBufferedImage;
 import icy.painter.AbstractPainter;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.plugin.abstract_.PluginActionable;
 import icy.roi.BooleanMask2D;
 import icy.roi.ROI2D;
 import icy.sequence.Sequence;
@@ -50,7 +49,7 @@ import java.util.Arrays;
  *
  *\code
  *
- * public class ProcessingFromROI extends Plugin implements PluginImageAnalysis, SequenceListener, ViewerListener
+ * public class ProcessingFromROI extends PluginActionable implements SequenceListener, ViewerListener
 {
     private Viewer viewer;
     private Sequence sequence;
@@ -59,7 +58,7 @@ import java.util.Arrays;
     private int[] imgData;
 
     @Override
-    public void compute()
+    public void run()
     {
         viewer = getFocusedViewer();
 
@@ -223,7 +222,7 @@ import java.util.Arrays;
  * @formatter:off
  * 
  */
-public class ProcessingFromROI extends Plugin implements PluginImageAnalysis, SequenceListener, ViewerListener
+public class ProcessingFromROI extends PluginActionable implements SequenceListener, ViewerListener
 {
     private Viewer viewer;
     private Sequence sequence;
@@ -232,7 +231,7 @@ public class ProcessingFromROI extends Plugin implements PluginImageAnalysis, Se
     private int[] imgData;
 
     @Override
-    public void compute()
+    public void run()
     {
         viewer = getFocusedViewer();
 

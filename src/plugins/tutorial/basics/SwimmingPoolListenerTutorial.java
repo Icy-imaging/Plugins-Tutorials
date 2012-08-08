@@ -20,8 +20,7 @@ package plugins.tutorial.basics;
 
 import icy.gui.frame.progress.AnnounceFrame;
 import icy.main.Icy;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.plugin.abstract_.PluginActionable;
 import icy.swimmingPool.SwimmingObject;
 import icy.swimmingPool.SwimmingPoolEvent;
 import icy.swimmingPool.SwimmingPoolEventType;
@@ -33,57 +32,53 @@ import java.awt.geom.Point2D;
  *\page tuto12 Tutorial: Plugin Communication : SwimmingPool : How to read and watch/listen data event of the swimming pool 
  *
  *\code
- *
- *
- *public class SwimmingPoolListenerTutorial extends Plugin implements PluginImageAnalysis , SwimmingPoolListener {
+ 
+public class SwimmingPoolListenerTutorial extends PluginActionable implements SwimmingPoolListener
+{
+    @Override
+    public void run()
+    {
+        // We register this class as a listener of the swimmingPool
+        Icy.getMainInterface().getSwimmingPool().addListener( this );
 
-	@Override
-	public void compute() {
+        new AnnounceFrame( "Swimming pool listener example: I am listening/watching the swimmingpool." );
+        
+        // watch if objects are already in the swimming pool:
+        for ( SwimmingObject swimmingObject : Icy.getMainInterface().getSwimmingPool().getObjects() )
+        {
+            if ( swimmingObject.getObject() instanceof Point2D )
+            {
+                Point2D point = (Point2D) swimmingObject.getObject();
+                new AnnounceFrame("Swimming pool listener example: There is already an object in the swimming pool ! Its coordinates are "+ point.getX() + "," + point.getY() );
+            }
+        }       
+    }
 
-		// We register this class as a listener of the swimmingPool
-		Icy.getMainInterface().getSwimmingPool().addListener( this );
-
-		new AnnounceFrame( "Swimming pool listener example: I am listening/watching the swimmingpool." );
-		
-		// watch if objects are already in the swimming pool:
-		for ( SwimmingObject swimmingObject : Icy.getMainInterface().getSwimmingPool().getObjects() )
-		{
-			if ( swimmingObject.getObject() instanceof Point2D )
-			{
-				Point2D point = (Point2D) swimmingObject.getObject();
-				new AnnounceFrame("Swimming pool listener example: There is already an object in the swimming pool ! Its coordinates are "+ point.getX() + "," + point.getY() );
-			}
-		}
-		
-	}
-
-	@Override
-	public void swimmingPoolChangeEvent(SwimmingPoolEvent event) {
-
-		// an object has been added in the swimming pool !
-		if ( event.getType() == SwimmingPoolEventType.ELEMENT_ADDED )
-		{
-			// Can we manage this type ?
-			if ( event.getResult().getObject() instanceof Point2D )
-			{
-				// yes, we know it, let's process it.
-				Point2D point = (Point2D) event.getResult().getObject();
-				new AnnounceFrame("Swimming pool listener example: A point has been dropped ! Its coordinates are "+ point.getX() + "," + point.getY() );
-			}else
-			{
-				// no, we don't know what we should do with it.
-				new AnnounceFrame( "Swimming pool listener example: Something has been dropped, but I don't know how to handle it." );		
-			}
-		}
-
-	}
-
-	
-	
+    @Override
+    public void swimmingPoolChangeEvent(SwimmingPoolEvent event)
+    {
+        // an object has been added in the swimming pool !
+        if ( event.getType() == SwimmingPoolEventType.ELEMENT_ADDED )
+        {
+            // Can we manage this type ?
+            if ( event.getResult().getObject() instanceof Point2D )
+            {
+                // yes, we know it, let's process it.
+                Point2D point = (Point2D) event.getResult().getObject();
+                new AnnounceFrame("Swimming pool listener example: A point has been dropped ! Its coordinates are "+ point.getX() + "," + point.getY() );
+            }else
+            {
+                // no, we don't know what we should do with it.
+                new AnnounceFrame( "Swimming pool listener example: Something has been dropped, but I don't know how to handle it." );      
+            }
+        }
+    }   
 }
- *
+
  *\endcode
  *
+ * @formatter:off
+ *   
  * This is a swimming pool listener tutorial. Use it with SwimmingPoolEmitterTutorial.
  *
  * The swimming pool is a place where any plugin can access, listen, create, delete or transform objects.
@@ -93,11 +88,11 @@ import java.awt.geom.Point2D;
  *
  * @author Fabrice de Chaumont and Stephane Dallongeville
  */
-public class SwimmingPoolListenerTutorial extends Plugin implements PluginImageAnalysis , SwimmingPoolListener {
-
+public class SwimmingPoolListenerTutorial extends PluginActionable implements SwimmingPoolListener
+{
 	@Override
-	public void compute() {
-
+	public void run()
+	{
 		// We register this class as a listener of the swimmingPool
 		Icy.getMainInterface().getSwimmingPool().addListener( this );
 
@@ -111,13 +106,12 @@ public class SwimmingPoolListenerTutorial extends Plugin implements PluginImageA
 				Point2D point = (Point2D) swimmingObject.getObject();
 				new AnnounceFrame("Swimming pool listener example: There is already an object in the swimming pool ! Its coordinates are "+ point.getX() + "," + point.getY() );
 			}
-		}
-		
+		}		
 	}
 
 	@Override
-	public void swimmingPoolChangeEvent(SwimmingPoolEvent event) {
-
+	public void swimmingPoolChangeEvent(SwimmingPoolEvent event)
+	{
 		// an object has been added in the swimming pool !
 		if ( event.getType() == SwimmingPoolEventType.ELEMENT_ADDED )
 		{
@@ -133,9 +127,5 @@ public class SwimmingPoolListenerTutorial extends Plugin implements PluginImageA
 				new AnnounceFrame( "Swimming pool listener example: Something has been dropped, but I don't know how to handle it." );		
 			}
 		}
-
-	}
-
-	
-	
+	}	
 }

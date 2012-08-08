@@ -23,8 +23,7 @@ import icy.canvas.IcyCanvas;
 import icy.gui.dialog.MessageDialog;
 import icy.gui.frame.progress.AnnounceFrame;
 import icy.painter.AbstractPainter;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
 
 import java.awt.BasicStroke;
@@ -47,11 +46,11 @@ import java.awt.geom.Rectangle2D;
  * 
  * \code
  * 
- * public class SimplePainter02 extends Plugin implements PluginImageAnalysis
+public class SimplePainter02 extends PluginActionable
 {
     // the plugin will be called by ICY through this function
     @Override
-    public void compute()
+    public void run()
     {
         // get the current sequence focused
         Sequence sequence = getFocusedSequence();
@@ -182,11 +181,11 @@ import java.awt.geom.Rectangle2D;
  *         
  * @formatter:off
  */
-public class SimplePainter02 extends Plugin implements PluginImageAnalysis
+public class SimplePainter02 extends PluginActionable
 {
     // the plugin will be called by ICY through this function
     @Override
-    public void compute()
+    public void run()
     {
         // get the current sequence focused
         Sequence sequence = getFocusedSequence();

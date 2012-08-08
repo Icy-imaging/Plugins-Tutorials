@@ -60,8 +60,7 @@ package plugins.tutorial.basics;
 
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.plugin.abstract_.PluginActionable;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -85,7 +84,7 @@ import org.jfree.ui.RectangleInsets;
 /**
  * A simple demonstration of a more complex graph from JFreeChart, adapted to ICY
  */
-public class DeviationRendererDemo2 extends Plugin implements PluginImageAnalysis
+public class DeviationRendererDemo2 extends PluginActionable
 {
 
     JPanel mainPanel = GuiUtil.generatePanel("Graph");
@@ -107,10 +106,10 @@ public class DeviationRendererDemo2 extends Plugin implements PluginImageAnalysi
         double d1 = 100D;
         for (int i = 0; i <= 52; i++)
         {
-            double d2 = 0.050000000000000003D * (double) i;
+            double d2 = 0.050000000000000003D * i;
             yintervalseries.add(((RegularTimePeriod) (obj)).getFirstMillisecond(), d, d - d2, d + d2);
             d = (d + Math.random()) - 0.45000000000000001D;
-            double d3 = 0.070000000000000007D * (double) i;
+            double d3 = 0.070000000000000007D * i;
             yintervalseries1.add(((RegularTimePeriod) (obj)).getFirstMillisecond(), d1, d1 - d3, d1 + d3);
             d1 = (d1 + Math.random()) - 0.55000000000000004D;
             obj = ((RegularTimePeriod) (obj)).next();
@@ -157,7 +156,7 @@ public class DeviationRendererDemo2 extends Plugin implements PluginImageAnalysi
     }
 
     @Override
-    public void compute()
+    public void run()
     {
 
         XYDataset dataset = createDataset();

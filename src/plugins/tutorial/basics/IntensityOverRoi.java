@@ -20,8 +20,7 @@ package plugins.tutorial.basics;
 
 import icy.gui.dialog.MessageDialog;
 import icy.gui.frame.progress.AnnounceFrame;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.plugin.abstract_.PluginActionable;
 import icy.roi.ROI2DPolyLine;
 import icy.sequence.Sequence;
 
@@ -32,33 +31,33 @@ import java.awt.Polygon;
  * Look at IntensityRulerPainter for the most interesting part.
  * 
  * @author Fabrice de Chaumont & Stephane Dallongeville
- *
  */
-public class IntensityOverRoi extends Plugin implements PluginImageAnalysis {
+public class IntensityOverRoi extends PluginActionable
+{
+    @Override
+    public void run()
+    {
 
-	@Override
-	public void compute() {
-	
-		Sequence sequence = getFocusedSequence();
-		if ( sequence == null )
-		{
-			MessageDialog.showDialog("Please open an image first.", MessageDialog.ERROR_MESSAGE );						
-			return;
-		}
-		getFocusedSequence().addPainter( new IntensityOverRoiPainter() );
-		
-		new AnnounceFrame("This tutorial displays an intensity profile over compatible ROIs");
-		
-		// creates a ROI2DPolyLine if no ROI exists		
-		if ( sequence.getROIs().size() == 0 )
-		{
-			ROI2DPolyLine roi = new ROI2DPolyLine();
-			int[] x= { 3 * sequence.getWidth() /4 , 2*sequence.getWidth() /4 , sequence.getWidth() /4 };
-			int[] y= { sequence.getHeight() /2  , sequence.getHeight() /4 , sequence.getHeight() /2 };
-			Polygon polygon = new Polygon( x , y , x.length );
-			roi.setPolygon( polygon );
-			sequence.addROI( roi );
-		}
-	}
-	
+        Sequence sequence = getFocusedSequence();
+        if (sequence == null)
+        {
+            MessageDialog.showDialog("Please open an image first.", MessageDialog.ERROR_MESSAGE);
+            return;
+        }
+        getFocusedSequence().addPainter(new IntensityOverRoiPainter());
+
+        new AnnounceFrame("This tutorial displays an intensity profile over compatible ROIs");
+
+        // creates a ROI2DPolyLine if no ROI exists
+        if (sequence.getROIs().size() == 0)
+        {
+            ROI2DPolyLine roi = new ROI2DPolyLine();
+            int[] x = {3 * sequence.getWidth() / 4, 2 * sequence.getWidth() / 4, sequence.getWidth() / 4};
+            int[] y = {sequence.getHeight() / 2, sequence.getHeight() / 4, sequence.getHeight() / 2};
+            Polygon polygon = new Polygon(x, y, x.length);
+            roi.setPolygon(polygon);
+            sequence.addROI(roi);
+        }
+    }
+
 }

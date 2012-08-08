@@ -22,51 +22,17 @@ import icy.gui.dialog.MessageDialog;
 import icy.gui.frame.progress.AnnounceFrame;
 import icy.image.IcyBufferedImage;
 import icy.math.MathUtil;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
-import icy.type.collection.array.ArrayUtil;
+import icy.plugin.abstract_.PluginActionable;
+import icy.type.collection.array.Array1DUtil;
 
 /**
  * \page tuto7 Tutorial: How to use some math operation over full array, regardless of the type.
  * \code
- * public class SimpleIntensify extends Plugin implements PluginImageAnalysis
- * {
- * 
- * @Override
- *           public void compute()
- *           {
- *           // get focused image
- *           IcyBufferedImage image = getFocusedImage();
- *           // check if the image exists
- *           if (image == null)
- *           {
- *           MessageDialog.showDialog("This plugin need a valid opened image.",
- *           MessageDialog.WARNING_MESSAGE);
- *           return;
- *           }
- *           // display what this tutorial perform.
- *           new AnnounceFrame(
- *           "This tutorial multiply image intensity by a factor of 2, regardless the image data type."
- *           );
- *           // get first component image data as double[] whatever is the base data type
- *           double[] data = ArrayUtil.arrayToDoubleArray1D(image.getDataXY(0),
- *           image.isSignedDataType());
- *           // multiply by a factor of 2
- *           MathUtil.mul(data, 2d);
- *           // write back data by taking care of destination type limitation
- *           ArrayUtil.doubleArrayToSafeArray1D(data, image.getDataXY(0), image.isSignedDataType());
- *           // notify data changed
- *           image.dataChanged();
- *           }
- *           }
- *           \endcode
- *           This plugin do a simple intensify operation on current opened image
- * @author Stephane & Fabrice
- */
-public class SimpleIntensify extends Plugin implements PluginImageAnalysis
+ 
+ public class SimpleIntensify extends PluginActionable
 {
     @Override
-    public void compute()
+    public void run()
     {
         // get focused image
         IcyBufferedImage image = getFocusedImage();
@@ -82,13 +48,53 @@ public class SimpleIntensify extends Plugin implements PluginImageAnalysis
         new AnnounceFrame("This tutorial multiply image intensity by a factor of 2, regardless the image data type.");
 
         // get first component image data as double[] whatever is the base data type
-        double[] data = ArrayUtil.arrayToDoubleArray1D(image.getDataXY(0), image.isSignedDataType());
+        double[] data = Array1DUtil.arrayToDoubleArray(image.getDataXY(0), image.isSignedDataType());
 
         // multiply by a factor of 2
         MathUtil.mul(data, 2d);
 
         // write back data by taking care of destination type limitation
-        ArrayUtil.doubleArrayToSafeArray1D(data, image.getDataXY(0), image.isSignedDataType());
+        Array1DUtil.doubleArrayToSafeArray(data, image.getDataXY(0), image.isSignedDataType());
+
+        // notify data changed
+        image.dataChanged();
+    }
+}
+
+ *           \endcode
+ *           
+ *           This plugin do a simple intensify operation on current opened image
+ *           
+ * @formatter:off
+ *   
+ * @author Stephane & Fabrice
+ */
+public class SimpleIntensify extends PluginActionable
+{
+    @Override
+    public void run()
+    {
+        // get focused image
+        IcyBufferedImage image = getFocusedImage();
+
+        // check if the image exists
+        if (image == null)
+        {
+            MessageDialog.showDialog("This plugin need a valid opened image.", MessageDialog.WARNING_MESSAGE);
+            return;
+        }
+
+        // display what this tutorial perform.
+        new AnnounceFrame("This tutorial multiply image intensity by a factor of 2, regardless the image data type.");
+
+        // get first component image data as double[] whatever is the base data type
+        double[] data = Array1DUtil.arrayToDoubleArray(image.getDataXY(0), image.isSignedDataType());
+
+        // multiply by a factor of 2
+        MathUtil.mul(data, 2d);
+
+        // write back data by taking care of destination type limitation
+        Array1DUtil.doubleArrayToSafeArray(data, image.getDataXY(0), image.isSignedDataType());
 
         // notify data changed
         image.dataChanged();

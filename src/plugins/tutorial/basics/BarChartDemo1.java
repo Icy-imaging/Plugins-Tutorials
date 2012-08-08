@@ -23,7 +23,7 @@ package plugins.tutorial.basics;
  * 
  * \code
  * 
- * public class BarChartDemo1 extends Plugin implements PluginImageAnalysis
+ * public class BarChartDemo1 extends PluginActionable
 {
 
     JPanel mainPanel = GuiUtil.generatePanel("Graph");
@@ -117,9 +117,8 @@ package plugins.tutorial.basics;
     }
 
     @Override
-    public void compute()
+    public void run()
     {
-
         CategoryDataset dataset = createDataset();
         JFreeChart chart = createChart(dataset);
         ChartPanel chartPanel = new ChartPanel(chart);
@@ -135,7 +134,6 @@ package plugins.tutorial.basics;
         mainFrame.setVisible(true);
         mainFrame.center();
         mainFrame.requestFocus();
-
     }
 
 }
@@ -188,8 +186,7 @@ package plugins.tutorial.basics;
 
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.plugin.abstract_.PluginActionable;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -216,9 +213,8 @@ import org.jfree.data.category.DefaultCategoryDataset;
 /**
  * A simple demonstration application showing how to create a bar chart, adapted to ICY.
  */
-public class BarChartDemo1 extends Plugin implements PluginImageAnalysis
+public class BarChartDemo1 extends PluginActionable
 {
-
     JPanel mainPanel = GuiUtil.generatePanel("Graph");
     IcyFrame mainFrame = GuiUtil.generateTitleFrame("Chart demo", mainPanel, new Dimension(300, 100), true, true, true,
             true);
@@ -230,7 +226,6 @@ public class BarChartDemo1 extends Plugin implements PluginImageAnalysis
      */
     private static CategoryDataset createDataset()
     {
-
         // row keys...
         String series1 = "First";
         String series2 = "Second";
@@ -277,7 +272,6 @@ public class BarChartDemo1 extends Plugin implements PluginImageAnalysis
      */
     private static JFreeChart createChart(CategoryDataset dataset)
     {
-
         // create the chart...
         JFreeChart chart = ChartFactory.createBarChart("Bar Chart Demo 1", // chart title
                 "Category", // domain axis label
@@ -330,9 +324,8 @@ public class BarChartDemo1 extends Plugin implements PluginImageAnalysis
     }
 
     @Override
-    public void compute()
+    public void run()
     {
-
         CategoryDataset dataset = createDataset();
         JFreeChart chart = createChart(dataset);
         ChartPanel chartPanel = new ChartPanel(chart);
@@ -348,7 +341,5 @@ public class BarChartDemo1 extends Plugin implements PluginImageAnalysis
         mainFrame.setVisible(true);
         mainFrame.center();
         mainFrame.requestFocus();
-
     }
-
 }

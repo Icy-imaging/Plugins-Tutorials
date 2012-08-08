@@ -23,25 +23,24 @@ import icy.gui.dialog.MessageDialog;
 import icy.gui.frame.progress.AnnounceFrame;
 import icy.main.Icy;
 import icy.painter.AbstractPainter;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
 
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 
 /**
- *         This tutorial displays a fancy marked animation at each click.
+ * This tutorial displays a fancy marked animation at each click.
+ * 
  * @author Fabrice de Chaumont / Stephane Dallongeville
  */
-public class AnimatedMarkPainter extends Plugin implements PluginImageAnalysis
+public class AnimatedMarkPainter extends PluginActionable
 {
-
     @Override
-    public void compute()
+    public void run()
     {
-    	// Get the current sequence focused. Stored to remove
-        Sequence sequence = getFocusedSequence(); 
+        // Get the current sequence focused. Stored to remove
+        Sequence sequence = getFocusedSequence();
 
         if (sequence == null) // no sequence has been found.
         {
@@ -53,26 +52,23 @@ public class AnimatedMarkPainter extends Plugin implements PluginImageAnalysis
         new AnnounceFrame("Click over image to put marks");
 
         // we add a painter which will listen to mouse click and create the OneMarkPainter objects.
-        sequence.addPainter( new ListeningClickPainter() );
-        
+        sequence.addPainter(new ListeningClickPainter());
+
     }
 
     /**
-     * 
-     * This inner class is designed to listen to click event on a sequence, and place a OneMarkPainter on it.
-     *
+     * This inner class is designed to listen to click event on a sequence, and place a
+     * OneMarkPainter on it.
      */
     class ListeningClickPainter extends AbstractPainter
     {
-    	@Override
-    	public void mouseClick(MouseEvent e, Point2D imagePoint, IcyCanvas canvas) {
-    		
-    		for ( Sequence sequence : Icy.getMainInterface().getSequencesContaining( this ) )
-    		{
-    			sequence.addPainter(new OneMarkAnimatedPainter(sequence, imagePoint));
-    		}    		
-    	}
+        @Override
+        public void mouseClick(MouseEvent e, Point2D imagePoint, IcyCanvas canvas)
+        {
+            for (Sequence sequence : Icy.getMainInterface().getSequencesContaining(this))
+            {
+                sequence.addPainter(new OneMarkAnimatedPainter(sequence, imagePoint));
+            }
+        }
     }
-    
-
 }

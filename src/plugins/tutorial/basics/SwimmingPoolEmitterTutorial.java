@@ -20,8 +20,7 @@ package plugins.tutorial.basics;
 
 import icy.gui.frame.progress.AnnounceFrame;
 import icy.main.Icy;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.plugin.abstract_.PluginActionable;
 import icy.swimmingPool.SwimmingObject;
 
 import java.awt.geom.Point2D;
@@ -30,32 +29,30 @@ import java.awt.geom.Point2D;
  *\page tuto11 Tutorial: Plugin Communication : SwimmingPool : How to send data to the swimming pool   
  *
  *\code
- *
- *public class SwimmingPoolEmitterTutorial extends Plugin implements PluginImageAnalysis {
+ 
+public class SwimmingPoolEmitterTutorial extends PluginActionable
+{
+    @Override
+    public void run() {     
+        // Create my data, of any type I wish. I chose Point2D
+        Point2D myData = new Point2D.Double( Math.random() , Math.random() );
 
-	@Override
-	public void compute() {
-		
-		// Create my data, of any type I wish. I chose Point2D
-		Point2D myData = new Point2D.Double( Math.random() , Math.random() );
+        // Put my object in a Swimming Object
+        SwimmingObject swimmingObject = new SwimmingObject( myData );
+        
+        // add the object in the swimming pool
+        Icy.getMainInterface().getSwimmingPool().add( swimmingObject );         
+        
+        new AnnounceFrame("Swimming pool emitter: I Just put an object, use a swimming pool listener to watch result." );               
 
-		// Put my object in a Swimming Object
-		SwimmingObject swimmingObject = new SwimmingObject( myData );
-		
-		// add the object in the swimming pool
-		Icy.getMainInterface().getSwimmingPool().add( swimmingObject );			
-		
-		new AnnounceFrame("Swimming pool emitter: I Just put an object, use a swimming pool listener to watch result." );        		
-
-		// done !
-		
-	}
-
-	
+        // done !       
+    }   
 }
- *
+
  *\endcode
  *
+ * @formatter:off
+ *   
  * This is a swimming pool emitter tutorial. Use it with SwimmingPoolListenerTutorial.
  *
  * The swimming pool is a place where any plugin can access, listen, create, delete or transform objects.
@@ -66,11 +63,10 @@ import java.awt.geom.Point2D;
  * @author Fabrice de Chaumont and Stephane Dallongeville
 
  */
-public class SwimmingPoolEmitterTutorial extends Plugin implements PluginImageAnalysis {
-
+public class SwimmingPoolEmitterTutorial extends PluginActionable
+{
 	@Override
-	public void compute() {
-		
+	public void run() {		
 		// Create my data, of any type I wish. I chose Point2D
 		Point2D myData = new Point2D.Double( Math.random() , Math.random() );
 
@@ -82,9 +78,6 @@ public class SwimmingPoolEmitterTutorial extends Plugin implements PluginImageAn
 		
 		new AnnounceFrame("Swimming pool emitter: I Just put an object, use a swimming pool listener to watch result." );        		
 
-		// done !
-		
-	}
-
-	
+		// done !		
+	}	
 }

@@ -18,13 +18,12 @@
  */
 package plugins.tutorial;
 
-import plugins.tutorial.gui.GuiBuildExample01;
 import icy.plugin.PluginDescriptor;
 import icy.plugin.PluginLauncher;
 import icy.plugin.PluginLoader;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.plugin.abstract_.PluginActionable;
 import icy.system.thread.ThreadUtil;
+import plugins.tutorial.gui.GuiBuildExample01;
 
 /**
  * <br>
@@ -34,11 +33,10 @@ import icy.system.thread.ThreadUtil;
  * 
  * @author Fabrice de Chaumont
  */
-public class StartAPluginFromAPlugin extends Plugin implements PluginImageAnalysis
+public class StartAPluginFromAPlugin extends PluginActionable
 {
-
     @Override
-    public void compute()
+    public void run()
     {
 
         System.out.println("Plugin list:");
@@ -58,6 +56,7 @@ public class StartAPluginFromAPlugin extends Plugin implements PluginImageAnalys
                 // Create a new Runnable which contain the proper launcher
                 ThreadUtil.invokeLater(new Runnable()
                 {
+                    @Override
                     public void run()
                     {
                         PluginLauncher.launch(pluginDescriptor);
@@ -73,6 +72,7 @@ public class StartAPluginFromAPlugin extends Plugin implements PluginImageAnalys
                 // Create a new Runnable which contain the proper launcher
                 ThreadUtil.invokeLater(new Runnable()
                 {
+                    @Override
                     public void run()
                     {
                         PluginLauncher.launch(pluginDescriptor);

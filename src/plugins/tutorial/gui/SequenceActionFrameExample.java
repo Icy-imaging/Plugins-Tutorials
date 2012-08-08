@@ -20,8 +20,7 @@ package plugins.tutorial.gui;
 
 import icy.gui.dialog.MessageDialog;
 import icy.gui.frame.sequence.SequenceActionFrame;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
 
 import java.awt.event.ActionEvent;
@@ -38,11 +37,10 @@ import javax.swing.JLabel;
  * 
  * \code
  * 
- * public class SequenceActionFrameExample extends Plugin implements PluginImageAnalysis
+ * public class SequenceActionFrameExample extends luginActionable
 {
-
     @Override
-    public void compute()
+    public void run()
     {
         // build a default action frame
         final SequenceActionFrame mainFrame = new SequenceActionFrame("Example", true);
@@ -87,13 +85,13 @@ import javax.swing.JLabel;
  * @formatter:off
  * 
  */
-public class SequenceActionFrameExample extends Plugin implements PluginImageAnalysis
+public class SequenceActionFrameExample extends PluginActionable
 {
     /**
      * @formatter:on
      */
     @Override
-    public void compute()
+    public void run()
     {
         // build a default action frame
         final SequenceActionFrame mainFrame = new SequenceActionFrame("Example", true);

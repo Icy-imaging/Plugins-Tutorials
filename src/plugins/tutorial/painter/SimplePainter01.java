@@ -24,8 +24,7 @@ import icy.gui.dialog.MessageDialog;
 import icy.gui.frame.progress.AnnounceFrame;
 import icy.main.Icy;
 import icy.painter.Painter;
-import icy.plugin.abstract_.Plugin;
-import icy.plugin.interface_.PluginImageAnalysis;
+import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
 
 import java.awt.BasicStroke;
@@ -46,11 +45,11 @@ import java.util.ArrayList;
  *
  * \code
  * 
-public class SimplePainter01 extends Plugin implements PluginImageAnalysis, Painter
+public class SimplePainter01 extends PluginActionable implements Painter
 {
     // automatically called when plugin is launched from ICY for "PluginImageAnalysis" type plugin
     @Override
-    public void compute()
+    public void run()
     {
         // get the current sequence focused
         // we store it for easier painter remove on mouse click
@@ -141,11 +140,11 @@ public class SimplePainter01 extends Plugin implements PluginImageAnalysis, Pain
  * 
  * @formatter:off
  */
-public class SimplePainter01 extends Plugin implements PluginImageAnalysis, Painter
+public class SimplePainter01 extends PluginActionable implements Painter
 {
     // automatically called when plugin is launched from ICY for "PluginImageAnalysis" type plugin
     @Override
-    public void compute()
+    public void run()
     {
         // get the current sequence focused
         // we store it for easier painter remove on mouse click
