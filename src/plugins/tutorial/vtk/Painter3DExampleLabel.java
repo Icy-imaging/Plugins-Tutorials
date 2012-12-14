@@ -27,10 +27,10 @@ import icy.sequence.Sequence;
 
 import java.awt.Graphics2D;
 
-import vtk.vtkActor;
 import vtk.vtkActor2D;
 import vtk.vtkCubeSource;
 import vtk.vtkLabeledDataMapper;
+import vtk.vtkProp;
 import vtk.vtkRenderer;
 import vtk.vtkSelectVisiblePoints;
 
@@ -90,15 +90,9 @@ public class Painter3DExampleLabel extends PluginActionable
         }
 
         @Override
-        public vtkActor[] getActors()
+        public vtkProp[] getProps()
         {
-            return new vtkActor[] {};
-        }
-
-        @Override
-        public vtkActor2D[] getActors2D()
-        {
-            return new vtkActor2D[] {pointLabels};
+            return new vtkProp[] {pointLabels};
         }
     }
 

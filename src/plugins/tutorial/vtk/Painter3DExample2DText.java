@@ -22,8 +22,7 @@ import icy.painter.AbstractPainter;
 import icy.painter.VtkPainter;
 import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
-import vtk.vtkActor;
-import vtk.vtkActor2D;
+import vtk.vtkProp;
 import vtk.vtkTextActor;
 import vtk.vtkTextProperty;
 
@@ -71,15 +70,9 @@ public class Painter3DExample2DText extends PluginActionable
         }
 
         @Override
-        public vtkActor[] getActors()
+        public vtkProp[] getProps()
         {
-            return new vtkActor[] {};
-        }
-
-        @Override
-        public vtkActor2D[] getActors2D()
-        {
-            return new vtkActor2D[] {textActor};
+            return new vtkProp[] {textActor};
         }
     }
 

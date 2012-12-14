@@ -23,9 +23,9 @@ import icy.painter.VtkPainter;
 import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
 import vtk.vtkActor;
-import vtk.vtkActor2D;
 import vtk.vtkAxes;
 import vtk.vtkPolyDataMapper;
+import vtk.vtkProp;
 
 /**
  * @author stephane
@@ -63,15 +63,9 @@ public class Painter3DExampleAxes extends PluginActionable
         }
 
         @Override
-        public vtkActor[] getActors()
+        public vtkProp[] getProps()
         {
-            return new vtkActor[] {axesActor};
-        }
-
-        @Override
-        public vtkActor2D[] getActors2D()
-        {
-            return new vtkActor2D[] {};
+            return new vtkProp[] {axesActor};
         }
     }
 

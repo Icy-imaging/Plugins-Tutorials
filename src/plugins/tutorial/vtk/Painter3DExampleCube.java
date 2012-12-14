@@ -24,11 +24,11 @@ import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
 import icy.vtk.VtkUtil;
 import vtk.vtkActor;
-import vtk.vtkActor2D;
 import vtk.vtkCellArray;
 import vtk.vtkPoints;
 import vtk.vtkPolyData;
 import vtk.vtkPolyDataMapper;
+import vtk.vtkProp;
 
 /**
  * This plugin shows how use VTK to render a simple cube mesh as a 3D painter
@@ -84,15 +84,9 @@ public class Painter3DExampleCube extends PluginActionable
         }
 
         @Override
-        public vtkActor[] getActors()
+        public vtkProp[] getProps()
         {
-            return new vtkActor[] {cubeActor};
-        }
-
-        @Override
-        public vtkActor2D[] getActors2D()
-        {
-            return new vtkActor2D[] {};
+            return new vtkProp[] {cubeActor};
         }
     }
 

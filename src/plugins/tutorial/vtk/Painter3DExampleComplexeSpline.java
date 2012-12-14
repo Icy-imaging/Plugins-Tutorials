@@ -23,7 +23,6 @@ import icy.painter.VtkPainter;
 import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
 import vtk.vtkActor;
-import vtk.vtkActor2D;
 import vtk.vtkCardinalSpline;
 import vtk.vtkCellArray;
 import vtk.vtkGlyph3D;
@@ -31,6 +30,7 @@ import vtk.vtkMath;
 import vtk.vtkPoints;
 import vtk.vtkPolyData;
 import vtk.vtkPolyDataMapper;
+import vtk.vtkProp;
 import vtk.vtkSphereSource;
 import vtk.vtkTubeFilter;
 
@@ -156,15 +156,9 @@ public class Painter3DExampleComplexeSpline extends PluginActionable
         }
 
         @Override
-        public vtkActor[] getActors()
+        public vtkProp[] getProps()
         {
-            return new vtkActor[] {glyph, profile};
-        }
-
-        @Override
-        public vtkActor2D[] getActors2D()
-        {
-            return new vtkActor2D[] {};
+            return new vtkProp[] {glyph, profile};
         }
     }
 
