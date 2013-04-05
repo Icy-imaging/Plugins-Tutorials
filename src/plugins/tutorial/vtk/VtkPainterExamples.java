@@ -5,7 +5,6 @@ package plugins.tutorial.vtk;
 
 import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
-import icy.util.Random;
 
 /**
  * This plugin shows how to render different VTK objects type through the Painter.
@@ -14,6 +13,8 @@ import icy.util.Random;
  */
 public class VtkPainterExamples extends PluginActionable
 {
+    private static int index = 0;
+
     @Override
     public void run()
     {
@@ -21,7 +22,7 @@ public class VtkPainterExamples extends PluginActionable
 
         if (sequence != null)
         {
-            switch (Random.nextInt() % 8)
+            switch (index % 8)
             {
                 default:
                     new VtkAnimatedEarthPainter(sequence);
@@ -48,6 +49,8 @@ public class VtkPainterExamples extends PluginActionable
                     new VtkText3DPainter(sequence);
                     break;
             }
+
+            index++;
         }
     }
 }
