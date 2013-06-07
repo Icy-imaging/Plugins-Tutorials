@@ -18,9 +18,8 @@
  */
 package plugins.tutorial.vtk;
 
-import icy.painter.AbstractPainter;
+import icy.painter.Overlay;
 import icy.painter.VtkPainter;
-import icy.sequence.Sequence;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,22 +34,19 @@ import vtk.vtkProp;
 /**
  * @author stephane
  */
-public class VtkAnimatedEarthPainter extends AbstractPainter implements ActionListener, VtkPainter
+public class VtkAnimatedEarthPainter extends Overlay implements ActionListener, VtkPainter
 {
     // vtk object
     private vtkActor earthActor;
 
     private double posX, posY, posZ;
 
-    public VtkAnimatedEarthPainter(Sequence sequence)
+    public VtkAnimatedEarthPainter()
     {
-        super();
+        super("VTK earth");
 
         init();
         posX = posY = posZ = 0;
-
-        // attach to sequence only when init is done
-        attachTo(sequence);
 
         // start update timer
         new Timer(20, this).start();
@@ -77,9 +73,8 @@ public class VtkAnimatedEarthPainter extends AbstractPainter implements ActionLi
         // update position
         earthActor.SetOrientation(++posX, posY, posZ);
 
-        // refresh render & painters
-        for (Sequence seq : getSequences())
-            seq.painterChanged(this);
+        // notify overlay changed (refresh display)
+        painterChanged();
     }
 
     @Override

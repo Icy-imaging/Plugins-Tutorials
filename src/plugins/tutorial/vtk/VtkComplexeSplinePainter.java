@@ -18,9 +18,8 @@
  */
 package plugins.tutorial.vtk;
 
-import icy.painter.AbstractPainter;
+import icy.painter.Overlay;
 import icy.painter.VtkPainter;
-import icy.sequence.Sequence;
 import vtk.vtkActor;
 import vtk.vtkCardinalSpline;
 import vtk.vtkCellArray;
@@ -36,20 +35,17 @@ import vtk.vtkTubeFilter;
 /**
  * @author stephane
  */
-public class VtkComplexeSplinePainter extends AbstractPainter implements VtkPainter
+public class VtkComplexeSplinePainter extends Overlay implements VtkPainter
 {
     // vtk object
     private vtkActor glyph;
     private vtkActor profile;
 
-    public VtkComplexeSplinePainter(Sequence sequence)
+    public VtkComplexeSplinePainter()
     {
-        super();
+        super("VTK spline");
 
         init();
-
-        // attach to sequence only when init is done
-        attachTo(sequence);
     }
 
     // init vtk objects

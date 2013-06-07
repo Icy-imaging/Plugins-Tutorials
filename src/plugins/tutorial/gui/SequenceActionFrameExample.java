@@ -32,64 +32,9 @@ import javax.swing.JLabel;
  * This example demonstrates a simple use of the SequenceActionFrame object
  * 
  * @author Stephane & Fab
- *
- * \page tuto14 Tutorial: How to use a template to have a simple plugin with an action button.
- * 
- * \code
- * 
- * public class SequenceActionFrameExample extends luginActionable
-{
-    @Override
-    public void run()
-    {
-        // build a default action frame
-        final SequenceActionFrame mainFrame = new SequenceActionFrame("Example", true);
-
-        // define action to do when OK button is pressed
-        mainFrame.setOkAction(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                // get selected sequence
-                final Sequence sequence = mainFrame.getSequence();
-
-                // no sequence
-                if (sequence == null)
-                    MessageDialog.showDialog("No sequence selected");
-                else
-                    MessageDialog.showDialog("You have selected : " + sequence.getName());
-            }
-        });
-
-        // define if the frame should be closed after OK action is done (default = true)
-        mainFrame.setCloseAfterAction(true);
-
-        // build your GUI here
-        mainFrame.getMainPanel().add(new JLabel("Set whatever you want here"));
-
-        // add the frame to the interface
-        addIcyFrame(mainFrame);
-        // center frame
-        mainFrame.center();
-        // make it visible
-        mainFrame.setVisible(true);
-        // and get focus
-        mainFrame.requestFocus();
-    }
-}
-
- * 
- * \endcode
- * 
- * @formatter:off
- * 
  */
 public class SequenceActionFrameExample extends PluginActionable
 {
-    /**
-     * @formatter:on
-     */
     @Override
     public void run()
     {

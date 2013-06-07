@@ -3,6 +3,7 @@
  */
 package plugins.tutorial.vtk;
 
+import icy.painter.Overlay;
 import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
 
@@ -22,33 +23,38 @@ public class VtkPainterExamples extends PluginActionable
 
         if (sequence != null)
         {
+            final Overlay overlay;
+
             switch (index % 8)
             {
                 default:
-                    new VtkAnimatedEarthPainter(sequence);
+                    overlay = new VtkAnimatedEarthPainter();
                     break;
                 case 1:
-                    new VtkAxesPainter(sequence);
+                    overlay = new VtkAxesPainter();
                     break;
                 case 2:
-                    new VtkComplexeSplinePainter(sequence);
+                    overlay = new VtkComplexeSplinePainter();
                     break;
                 case 3:
-                    new VtkCubePainter(sequence);
+                    overlay = new VtkCubePainter();
                     break;
                 case 4:
-                    new VtkLabelPainter(sequence);
+                    overlay = new VtkLabelPainter();
                     break;
                 case 5:
-                    new VtkSpherePainter(sequence);
+                    overlay = new VtkSpherePainter();
                     break;
                 case 6:
-                    new VtkText2DPainter(sequence);
+                    overlay = new VtkText2DPainter();
                     break;
                 case 7:
-                    new VtkText3DPainter(sequence);
+                    overlay = new VtkText3DPainter();
                     break;
             }
+
+            // add the created VTK overlay to the sequence
+            sequence.addPainter(overlay);
 
             index++;
         }

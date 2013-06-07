@@ -18,9 +18,8 @@
  */
 package plugins.tutorial.vtk;
 
-import icy.painter.AbstractPainter;
+import icy.painter.Overlay;
 import icy.painter.VtkPainter;
-import icy.sequence.Sequence;
 import vtk.vtkActor;
 import vtk.vtkPolyDataMapper;
 import vtk.vtkProp;
@@ -29,18 +28,15 @@ import vtk.vtkSphereSource;
 /**
  * @author stephane
  */
-public class VtkSpherePainter extends AbstractPainter implements VtkPainter
+public class VtkSpherePainter extends Overlay implements VtkPainter
 {
     private vtkActor aSphere;
 
-    public VtkSpherePainter(Sequence sequence)
+    public VtkSpherePainter()
     {
-        super();
+        super("VTK sphere");
 
         init();
-
-        // attach to sequence only when init is done
-        attachTo(sequence);
     }
 
     // init vtk objects

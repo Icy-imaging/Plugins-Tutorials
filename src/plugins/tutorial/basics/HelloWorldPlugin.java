@@ -22,29 +22,11 @@ import icy.gui.frame.progress.AnnounceFrame;
 import icy.plugin.abstract_.PluginActionable;
 
 /**
- * \page tuto1 Tutorial: Hello World Plugin.
  * This tutorial displays a simple message at the bottom of the screen, in a scrolling annonceFrame.
  * A class is an ICY plugin as it extends icy.plugin.abstract_.Plugin
  * It can then be visible in the menu if it implements icy.plugin.interface_.PluginImageAnalysis
  * 
  * @author Fabrice de Chaumont & Stephane Dallongeville
- *         \code
-
-public class HelloWorldPlugin extends PluginActionable
-{
-    // This method will be called as the user click on the plugin button.
-    @Override
-    public void run()
-    {
-
-        new AnnounceFrame("Hello ICY !");
-
-    }
-}
-
- *           \endcode
- *           
- * @formatter:off
  */
 public class HelloWorldPlugin extends PluginActionable
 {
@@ -52,8 +34,6 @@ public class HelloWorldPlugin extends PluginActionable
     @Override
     public void run()
     {
-
         new AnnounceFrame("Hello ICY !");
-
     }
 }

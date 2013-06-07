@@ -18,9 +18,8 @@
  */
 package plugins.tutorial.vtk;
 
-import icy.painter.AbstractPainter;
+import icy.painter.Overlay;
 import icy.painter.VtkPainter;
-import icy.sequence.Sequence;
 import vtk.vtkActor;
 import vtk.vtkFollower;
 import vtk.vtkPolyDataMapper;
@@ -30,18 +29,15 @@ import vtk.vtkVectorText;
 /**
  * @author stephane
  */
-public class VtkText3DPainter extends AbstractPainter implements VtkPainter
+public class VtkText3DPainter extends Overlay implements VtkPainter
 {
     private vtkFollower textActor;
 
-    public VtkText3DPainter(Sequence sequence)
+    public VtkText3DPainter()
     {
-        super();
+        super("VTK 3D text");
 
         init();
-
-        // attach to sequence only when init is done
-        attachTo(sequence);
     }
 
     // init vtk objects

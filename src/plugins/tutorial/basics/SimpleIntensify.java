@@ -26,47 +26,8 @@ import icy.plugin.abstract_.PluginActionable;
 import icy.type.collection.array.Array1DUtil;
 
 /**
- * \page tuto7 Tutorial: How to use some math operation over full array, regardless of the type.
- * \code
- 
- public class SimpleIntensify extends PluginActionable
-{
-    @Override
-    public void run()
-    {
-        // get focused image
-        IcyBufferedImage image = getFocusedImage();
-
-        // check if the image exists
-        if (image == null)
-        {
-            MessageDialog.showDialog("This plugin need a valid opened image.", MessageDialog.WARNING_MESSAGE);
-            return;
-        }
-
-        // display what this tutorial perform.
-        new AnnounceFrame("This tutorial multiply image intensity by a factor of 2, regardless the image data type.");
-
-        // get first component image data as double[] whatever is the base data type
-        double[] data = Array1DUtil.arrayToDoubleArray(image.getDataXY(0), image.isSignedDataType());
-
-        // multiply by a factor of 2
-        MathUtil.mul(data, 2d);
-
-        // write back data by taking care of destination type limitation
-        Array1DUtil.doubleArrayToSafeArray(data, image.getDataXY(0), image.isSignedDataType());
-
-        // notify data changed
-        image.dataChanged();
-    }
-}
-
- *           \endcode
- *           
- *           This plugin do a simple intensify operation on current opened image
- *           
- * @formatter:off
- *   
+ * This plugin do a simple intensify operation on current opened image
+ * 
  * @author Stephane & Fabrice
  */
 public class SimpleIntensify extends PluginActionable

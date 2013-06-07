@@ -26,10 +26,9 @@ import icy.system.thread.ThreadUtil;
 import plugins.tutorial.gui.GuiBuildExample01;
 
 /**
- * <br>
  * This tutorial shows how to start a plugin from a plugin. <br>
  * We use an invoke later to create the plugin in the graphic thread. Plugin which support starting
- * as thread don't need this. TODO: cette classe ne devrait pas implementer une pluginimageanalysis.
+ * as thread don't need this.
  * 
  * @author Fabrice de Chaumont
  */
@@ -59,7 +58,7 @@ public class StartAPluginFromAPlugin extends PluginActionable
                     @Override
                     public void run()
                     {
-                        PluginLauncher.launch(pluginDescriptor);
+                        PluginLauncher.start(pluginDescriptor);
                     }
                 });
             }
@@ -75,14 +74,12 @@ public class StartAPluginFromAPlugin extends PluginActionable
                     @Override
                     public void run()
                     {
-                        PluginLauncher.launch(pluginDescriptor);
+                        PluginLauncher.start(pluginDescriptor);
                     }
                 });
             }
 
             System.out.println();
         }
-
     }
-
 }

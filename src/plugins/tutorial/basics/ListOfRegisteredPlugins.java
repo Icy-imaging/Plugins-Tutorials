@@ -24,53 +24,31 @@ import icy.plugin.PluginLoader;
 import icy.plugin.abstract_.PluginActionable;
 
 /**
- * \page tuto3 Tutorial: Getting the list of registered plugin.
- * 
- * \code
- 
-public class ListOfRegisteredPlugins extends PluginActionable{
-    @Override
-    public void run()
-    {
-        new AnnounceFrame("This plugin display infos about presents plugins and display it in the output tab (or console).");
-        
-        // Loop over all registered plugins ( recognized at startup )
-        for (PluginDescriptor pluginDescriptor : PluginLoader.getPlugins())
-        {
-            // output the name and the author in the console ( visible in the output tab of the inspector )
-            System.out.println("Name: " + pluginDescriptor.getName());
-            
-            // pluginDescriptor contains a lot of infos about plugins, you can check for update, look for dependencies, get
-            // the beta version, full changelog, icons, description , author email, url, web link (...).
-        }
-    }
-}
-
-
- *  \endcode
- * 
- * @formatter:off
- * 
  * This tutorial displays the registered plugins ( installed and recognized plugins in ICY ).
  * It uses the PluginLoader and the PluginDescriptor classes.
  * The display is in the stdio.
- *
+ * 
  * @author Fabrice de Chaumont and Stephane Dallongeville
  */
-public class ListOfRegisteredPlugins extends PluginActionable{
-	@Override
-	public void run()
-	{
-		new AnnounceFrame("This plugin display infos about presents plugins and display it in the output tab (or console).");
-		
-		// Loop over all registered plugins ( recognized at startup )
-		for (PluginDescriptor pluginDescriptor : PluginLoader.getPlugins())
-		{
-			// output the name and the author in the console ( visible in the output tab of the inspector )
-			System.out.println("Name: " + pluginDescriptor.getName());
-			
-			// pluginDescriptor contains a lot of infos about plugins, you can check for update, look for dependencies, get
-			// the beta version, full changelog, icons, description , author email, url, web link (...).
-		}
-	}
+public class ListOfRegisteredPlugins extends PluginActionable
+{
+    @Override
+    public void run()
+    {
+        new AnnounceFrame(
+                "This plugin display infos about presents plugins and display it in the output tab (or console).");
+
+        // Loop over all registered plugins ( recognized at startup )
+        for (PluginDescriptor pluginDescriptor : PluginLoader.getPlugins())
+        {
+            // output the name and the author in the console ( visible in the output tab of the
+            // inspector )
+            System.out.println("Name: " + pluginDescriptor.getName());
+
+            // pluginDescriptor contains a lot of infos about plugins, you can check for update,
+            // look for dependencies, get
+            // the beta version, full changelog, icons, description , author email, url, web link
+            // (...).
+        }
+    }
 }

@@ -18,9 +18,8 @@
  */
 package plugins.tutorial.vtk;
 
-import icy.painter.AbstractPainter;
+import icy.painter.Overlay;
 import icy.painter.VtkPainter;
-import icy.sequence.Sequence;
 import icy.vtk.VtkUtil;
 import vtk.vtkActor;
 import vtk.vtkCellArray;
@@ -34,7 +33,7 @@ import vtk.vtkProp;
  * 
  * @author Stephane
  */
-public class VtkCubePainter extends AbstractPainter implements VtkPainter
+public class VtkCubePainter extends Overlay implements VtkPainter
 {
     private static final double[][] cube_vertex = new double[][] { {-10, -10, -10}, {-10, 10, -10}, {10, 10, -10},
             {10, -10, -10}, {-10, -10, 10}, {-10, 10, 10}, {10, 10, 10}, {10, -10, 10}};
@@ -43,14 +42,11 @@ public class VtkCubePainter extends AbstractPainter implements VtkPainter
 
     private vtkActor cubeActor;
 
-    public VtkCubePainter(Sequence sequence)
+    public VtkCubePainter()
     {
-        super();
+        super("VTK cube");
 
         init();
-
-        // attach to sequence only when init is done
-        attachTo(sequence);
     }
 
     private void init()

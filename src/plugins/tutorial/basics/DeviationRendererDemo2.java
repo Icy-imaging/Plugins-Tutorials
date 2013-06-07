@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with ICY. If not, see <http://www.gnu.org/licenses/>.
  */
-package plugins.tutorial.basics;
 
 /*
  * ===========================================================
@@ -57,6 +56,7 @@ package plugins.tutorial.basics;
  * -------
  * 09-Mar-2005 : Version 1 (DG);
  */
+package plugins.tutorial.basics;
 
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;

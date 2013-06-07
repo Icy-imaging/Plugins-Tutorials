@@ -18,9 +18,8 @@
  */
 package plugins.tutorial.vtk;
 
-import icy.painter.AbstractPainter;
+import icy.painter.Overlay;
 import icy.painter.VtkPainter;
-import icy.sequence.Sequence;
 import vtk.vtkActor;
 import vtk.vtkAxes;
 import vtk.vtkPolyDataMapper;
@@ -29,19 +28,16 @@ import vtk.vtkProp;
 /**
  * @author stephane
  */
-public class VtkAxesPainter extends AbstractPainter implements VtkPainter
+public class VtkAxesPainter extends Overlay implements VtkPainter
 {
     // vtk object
     private vtkActor axesActor;
 
-    public VtkAxesPainter(Sequence sequence)
+    public VtkAxesPainter()
     {
-        super();
+        super("VTK Axes");
 
         init();
-
-        // attach to sequence only when init is done
-        attachTo(sequence);
     }
 
     // init vtk objects

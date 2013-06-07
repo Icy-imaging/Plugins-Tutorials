@@ -11,6 +11,7 @@ public class TitledPluginInterface extends PluginActionable
     public void run()
     {
         ActionFrame frame = new ActionFrame("Tutorial", true, true);
+
         // get main panel to add component if desired...
         JPanel mainPanel = frame.getMainPanel();
 

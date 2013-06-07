@@ -20,7 +20,7 @@ package plugins.tutorial.vtk;
 
 import icy.canvas.Canvas3D;
 import icy.canvas.IcyCanvas;
-import icy.painter.AbstractPainter;
+import icy.painter.Overlay;
 import icy.painter.VtkPainter;
 import icy.sequence.Sequence;
 
@@ -36,19 +36,16 @@ import vtk.vtkSelectVisiblePoints;
 /**
  * @author stephane
  */
-public class VtkLabelPainter extends AbstractPainter implements VtkPainter
+public class VtkLabelPainter extends Overlay implements VtkPainter
 {
     private vtkActor2D pointLabels;
     private vtkSelectVisiblePoints visPts;
 
-    public VtkLabelPainter(Sequence sequence)
+    public VtkLabelPainter()
     {
-        super();
+        super("VTK label");
 
         init();
-
-        // attach to sequence only when init is done
-        attachTo(sequence);
     }
 
     // init vtk objects

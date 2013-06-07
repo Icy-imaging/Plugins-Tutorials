@@ -18,9 +18,8 @@
  */
 package plugins.tutorial.vtk;
 
-import icy.painter.AbstractPainter;
+import icy.painter.Overlay;
 import icy.painter.VtkPainter;
-import icy.sequence.Sequence;
 import vtk.vtkProp;
 import vtk.vtkTextActor;
 import vtk.vtkTextProperty;
@@ -30,19 +29,16 @@ import vtk.vtkTextProperty;
  * 
  * @author Stephane
  */
-public class VtkText2DPainter extends AbstractPainter implements VtkPainter
+public class VtkText2DPainter extends Overlay implements VtkPainter
 {
     // vtk object
     private vtkTextActor textActor;
 
-    public VtkText2DPainter(Sequence sequence)
+    public VtkText2DPainter()
     {
-        super();
+        super("VTK 2D text");
 
         init();
-
-        // attach to sequence only when init is done
-        attachTo(sequence);
     }
 
     // init vtk objects
