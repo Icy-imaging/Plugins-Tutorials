@@ -11,6 +11,6 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
-        <javaElement handleIdentifier="=Plugins-Tutorials/src&lt;plugins.tutorial.basics{DeviationRendererDemo2.java"/>
+        <javaElement handleIdentifier="=Plugins-Tutorials/src&lt;plugins.tutorial.chart{DeviationRendererDemo2.java"/>
     </selectedElements>
 </jardesc>

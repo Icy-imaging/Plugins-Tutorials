@@ -18,20 +18,31 @@
  */
 package plugins.tutorial.vtk;
 
+import icy.canvas.Canvas3D;
+import icy.canvas.IcyCanvas;
 import icy.painter.Overlay;
 import icy.painter.VtkPainter;
-import vtk.vtkActor;
-import vtk.vtkAxes;
-import vtk.vtkPolyDataMapper;
+import icy.sequence.Sequence;
+
+import java.awt.Graphics2D;
+
+import vtk.vtkAxisActor;
+import vtk.vtkCamera;
+import vtk.vtkCubeAxesActor;
+import vtk.vtkOrientationMarkerWidget;
 import vtk.vtkProp;
+import vtk.vtkRenderWindowInteractor;
 
 /**
  * @author stephane
  */
 public class VtkAxesPainter extends Overlay implements VtkPainter
 {
-    // vtk object
-    private vtkActor axesActor;
+    // vtk objects
+    private vtkAxisActor axesActor;
+    private vtkCubeAxesActor cubeAxesActor;
+    private vtkRenderWindowInteractor renderWindowInteractor;
+    private vtkOrientationMarkerWidget widget;
 
     public VtkAxesPainter()
     {
@@ -44,20 +55,46 @@ public class VtkAxesPainter extends Overlay implements VtkPainter
     private void init()
     {
         // 3D axes
-        final vtkAxes axes = new vtkAxes();
-        axes.SetOrigin(0, 0, 0);
-        axes.SetScaleFactor(100);
+        axesActor = new vtkAxisActor();
+        axesActor.SetOrigin(0, 0, 0);
+        axesActor.SetPosition(0, 0, 0);
 
-        final vtkPolyDataMapper axesMapper = new vtkPolyDataMapper();
-        axesMapper.SetInput(axes.GetOutput());
+        renderWindowInteractor = new vtkRenderWindowInteractor();
+        widget = new vtkOrientationMarkerWidget();
+        widget.SetOutlineColor(0.9300, 0.5700, 0.1300);
+        widget.SetOrientationMarker(axesActor);
+        widget.SetInteractor(renderWindowInteractor);
+        widget.SetViewport(0.0, 0.0, 0.4, 0.4);
 
-        axesActor = new vtkActor();
-        axesActor.SetMapper(axesMapper);
+        cubeAxesActor = new vtkCubeAxesActor();
+        cubeAxesActor.SetOrigin(0, 0, 0);
+    }
+
+    @Override
+    public void paint(Graphics2D g, Sequence sequence, IcyCanvas canvas)
+    {
+        // super.paint(g, sequence, canvas);
+
+        if (canvas instanceof Canvas3D)
+        {
+            final Canvas3D c3d = (Canvas3D) canvas;
+            final vtkCamera camera = c3d.getRenderer().GetActiveCamera();
+
+            if (cubeAxesActor.GetCamera() != camera)
+            {
+                renderWindowInteractor.SetRenderWindow(c3d.getRenderer().GetRenderWindow());
+                widget.SetEnabled(1);
+                widget.InteractiveOn();
+
+                cubeAxesActor.SetBounds(0, c3d.getImageSizeX(), 0, c3d.getImageSizeY(), 0, c3d.getImageSizeZ());
+                cubeAxesActor.SetCamera(camera);
+            }
+        }
     }
 
     @Override
     public vtkProp[] getProps()
     {
-        return new vtkProp[] {axesActor};
+        return new vtkProp[] {axesActor, cubeAxesActor};
     }
 }

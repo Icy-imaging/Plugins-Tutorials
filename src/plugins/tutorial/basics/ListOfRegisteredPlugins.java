@@ -43,7 +43,8 @@ public class ListOfRegisteredPlugins extends PluginActionable
         {
             // output the name and the author in the console ( visible in the output tab of the
             // inspector )
-            System.out.println("Name: " + pluginDescriptor.getName());
+            System.out.println("Name: " + pluginDescriptor.getName() + "  Version: " + pluginDescriptor.getVersion());
+            System.out.println("  Author: " + pluginDescriptor.getAuthor());
 
             // pluginDescriptor contains a lot of infos about plugins, you can check for update,
             // look for dependencies, get

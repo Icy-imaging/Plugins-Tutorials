@@ -48,16 +48,20 @@ public class SimpleIntensify extends PluginActionable
         // display what this tutorial perform.
         new AnnounceFrame("This tutorial multiply image intensity by a factor of 2, regardless the image data type.");
 
-        // get first component image data as double[] whatever is the base data type
-        double[] data = Array1DUtil.arrayToDoubleArray(image.getDataXY(0), image.isSignedDataType());
+        // get first channel image data array regardless of the data type
+        Object dataArray = image.getDataXY(0);
+
+        // transform data array to double data array for easy processing
+        double[] doubleDataArray = Array1DUtil.arrayToDoubleArray(dataArray, image.isSignedDataType());
 
         // multiply by a factor of 2
-        MathUtil.mul(data, 2d);
+        MathUtil.mul(doubleDataArray, 2d);
 
-        // write back data by taking care of destination type limitation
-        Array1DUtil.doubleArrayToSafeArray(data, image.getDataXY(0), image.isSignedDataType());
+        // transform data back to original data type.
+        // 'Safe' methods take care of overflow with the destination data type.
+        Array1DUtil.doubleArrayToSafeArray(doubleDataArray, image.getDataXY(0), image.isSignedDataType());
 
-        // notify data changed
+        // notify the data has changed (internal updates and view refresh)
         image.dataChanged();
     }
 }

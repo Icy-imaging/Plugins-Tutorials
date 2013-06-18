@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with ICY. If not, see <http://www.gnu.org/licenses/>.
  */
-package plugins.tutorial.basics;
+package plugins.tutorial.roi;
 
 import icy.gui.dialog.MessageDialog;
 import icy.gui.frame.progress.AnnounceFrame;
@@ -44,12 +44,13 @@ public class IntensityOverRoi extends PluginActionable
             MessageDialog.showDialog("Please open an image first.", MessageDialog.ERROR_MESSAGE);
             return;
         }
-        getFocusedSequence().addPainter(new IntensityOverRoiPainter());
+
+        sequence.addPainter(new IntensityOverRoiPainter());
 
         new AnnounceFrame("This tutorial displays an intensity profile over compatible ROIs");
 
         // creates a ROI2DPolyLine if no ROI exists
-        if (sequence.getROIs().size() == 0)
+        if (!sequence.hasROI())
         {
             ROI2DPolyLine roi = new ROI2DPolyLine();
             int[] x = {3 * sequence.getWidth() / 4, 2 * sequence.getWidth() / 4, sequence.getWidth() / 4};

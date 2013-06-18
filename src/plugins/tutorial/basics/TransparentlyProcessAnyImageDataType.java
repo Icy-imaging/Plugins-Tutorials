@@ -62,7 +62,7 @@ public class TransparentlyProcessAnyImageDataType extends PluginActionable
             return;
         }
 
-        // Get the data of the image for band 0 as a linear buffer, regardless of the type.
+        // Get the data of the image for channel 0 as a linear buffer, regardless of the type.
         Object imageData = image.getDataXY(0);
 
         // Get a copy of the data in double.
@@ -72,12 +72,12 @@ public class TransparentlyProcessAnyImageDataType extends PluginActionable
         for (int i = 0; i < dataBuffer.length / 2; i++)
             dataBuffer[i] /= 2;
 
-        // Put the data back to the original image
-        // Convert the double data automatically to the data type of the image. image.getDataXY(0)
-        // return a reference on the internal data of the image.
+        // Put the data back to the original image.
+        // Convert the double data automatically to the data type of the image.
+        // image.getDataXY(0) return a reference on the internal data of the image.
         Array1DUtil.doubleArrayToArray(dataBuffer, image.getDataXY(0));
 
-        // notify ICY the data has changed.
+        // notify the data has changed (internal updates and view refresh)
         image.dataChanged();
     }
 }

@@ -21,6 +21,8 @@ public class VtkPainterExamples extends PluginActionable
     {
         final Sequence sequence = getFocusedSequence();
 
+        index = 1;
+
         if (sequence != null)
         {
             final Overlay overlay;

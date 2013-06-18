@@ -11,6 +11,6 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
-        <javaElement handleIdentifier="=Plugins-Tutorials/src&lt;plugins.tutorial.basics{BarChartDemo1.java"/>
+        <javaElement handleIdentifier="=Plugins-Tutorials/src&lt;plugins.tutorial.chart{BarChartDemo1.java"/>
     </selectedElements>
 </jardesc>

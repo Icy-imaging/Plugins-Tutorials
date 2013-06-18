@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with ICY. If not, see <http://www.gnu.org/licenses/>.
  */
-package plugins.tutorial.basics;
+package plugins.tutorial.roi;
 
 import icy.canvas.IcyCanvas;
 import icy.image.IcyBufferedImage;
@@ -72,9 +72,8 @@ public class IntensityOverRoiPainter extends Overlay
             public boolean consume(Shape shape)
             {
                 if (shape instanceof Line2D)
-                {
                     drawHisto((Line2D) shape, g, sequence, canvas);
-                }
+
                 return true; // continue
             }
         });

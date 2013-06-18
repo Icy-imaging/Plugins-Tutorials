@@ -11,7 +11,7 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
-        <javaElement handleIdentifier="=Plugins-Tutorials/src&lt;plugins.tutorial.basics{IntensityOverRoi.java"/>
-        <javaElement handleIdentifier="=Plugins-Tutorials/src&lt;plugins.tutorial.basics{IntensityOverRoiPainter.java"/>
+        <javaElement handleIdentifier="=Plugins-Tutorials/src&lt;plugins.tutorial.roi{IntensityOverRoiPainter.java"/>
+        <javaElement handleIdentifier="=Plugins-Tutorials/src&lt;plugins.tutorial.roi{IntensityOverRoi.java"/>
     </selectedElements>
 </jardesc>

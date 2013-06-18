@@ -31,7 +31,6 @@ import icy.type.DataType;
 
 public class GenerateImageOfDifferentType extends PluginActionable
 {
-
     @Override
     public void run()
     {
@@ -53,10 +52,10 @@ public class GenerateImageOfDifferentType extends PluginActionable
             // notify to icy that data has changed to refresh internal state and display
             image.dataChanged();
 
-            // create a sequence
+            // create a sequence from the generated image
             Sequence sequence = new Sequence("Float Image", image);
 
-            // Create a viewer to watch the sequence.
+            // add a "viewer" to see the sequence in the application
             addSequence(sequence);
         }
 
@@ -78,10 +77,10 @@ public class GenerateImageOfDifferentType extends PluginActionable
             // notify to icy that data has changed to refresh internal state and display
             image.dataChanged();
 
-            // create a sequence
+            // create a sequence from the generated image
             Sequence sequence = new Sequence("Unsigned byte Image", image);
 
-            // Create a viewer to watch the sequence.
+            // add a "viewer" to see the sequence in the application
             addSequence(sequence);
         }
 
@@ -103,10 +102,10 @@ public class GenerateImageOfDifferentType extends PluginActionable
             // notify to icy that data has changed to refresh internal state and display
             image.dataChanged();
 
-            // create a sequence
+            // create a sequence from the generated image
             Sequence sequence = new Sequence("Int Image", image);
 
-            // Create a viewer to watch the sequence.
+            // add a "viewer" to see the sequence in the application
             addSequence(sequence);
         }
 
@@ -128,10 +127,10 @@ public class GenerateImageOfDifferentType extends PluginActionable
             // notify to icy that data has changed to refresh internal state and display
             image.dataChanged();
 
-            // create a sequence
+            // create a sequence from the generated image
             Sequence sequence = new Sequence("Unsigned Short Image", image);
 
-            // Create a viewer to watch the sequence.
+            // add a "viewer" to see the sequence in the application
             addSequence(sequence);
         }
 
@@ -153,10 +152,10 @@ public class GenerateImageOfDifferentType extends PluginActionable
             // notify to icy that data has changed to refresh internal state and display
             image.dataChanged();
 
-            // create a sequence
+            // create a sequence from the generated image
             Sequence sequence = new Sequence("Short Image", image);
 
-            // Create a viewer to watch the sequence.
+            // add a "viewer" to see the sequence in the application
             addSequence(sequence);
         }
 
@@ -178,10 +177,10 @@ public class GenerateImageOfDifferentType extends PluginActionable
             // notify to icy that data has changed to refresh internal state and display
             image.dataChanged();
 
-            // create a sequence
+            // create a sequence from the generated image
             Sequence sequence = new Sequence("Double Image", image);
 
-            // Create a viewer to watch the sequence.
+            // add a "viewer" to see the sequence in the application
             addSequence(sequence);
         }
     }

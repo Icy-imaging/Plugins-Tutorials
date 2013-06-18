@@ -57,7 +57,7 @@
  * 09-Mar-2005 : Version 1 (DG);
  */
 
-package plugins.tutorial.basics;
+package plugins.tutorial.chart;
 
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
