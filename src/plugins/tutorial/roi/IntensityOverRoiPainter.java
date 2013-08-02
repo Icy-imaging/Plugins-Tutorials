@@ -19,6 +19,7 @@
 package plugins.tutorial.roi;
 
 import icy.canvas.IcyCanvas;
+import icy.canvas.IcyCanvas2D;
 import icy.image.IcyBufferedImage;
 import icy.painter.Overlay;
 import icy.roi.ROI2D;
@@ -32,7 +33,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Shape;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 
 /**
@@ -50,18 +50,21 @@ public class IntensityOverRoiPainter extends Overlay
     @Override
     public void paint(Graphics2D g, Sequence sequence, IcyCanvas canvas)
     {
-        // create a graphics object so that we can then dispose it at the end of the paint to clean
-        // all change performed in the paint,
-        // like transform, color change, stroke (...).
-        Graphics2D g2 = (Graphics2D) g.create();
-
-        for (ROI2D roi : sequence.getROI2Ds())
+        // check if we are dealing with a canvas 2D and we have a valid Graphics object
+        if ((canvas instanceof IcyCanvas2D) && (g != null))
         {
-            if (roi instanceof ROI2DShape)
-                computeIntensityROI((ROI2DShape) roi, g2, sequence, canvas);
-        }
+            // create a graphics object so that we can then dispose it at the end of the paint to
+            // clean all change performed in the paint, like transform, color change, stroke (...).
+            Graphics2D g2 = (Graphics2D) g.create();
 
-        g2.dispose();
+            for (ROI2D roi : sequence.getROI2Ds())
+            {
+                if (roi instanceof ROI2DShape)
+                    computeIntensityROI((ROI2DShape) roi, g2, sequence, canvas);
+            }
+
+            g2.dispose();
+        }
     }
 
     private void computeIntensityROI(ROI2DShape roi, final Graphics2D g, final Sequence sequence, final IcyCanvas canvas)
@@ -111,7 +114,7 @@ public class IntensityOverRoiPainter extends Overlay
                 y += vy;
             }
 
-            AffineTransform originalTransform = g.getTransform();
+            final Graphics2D g2 = (Graphics2D) g.create();
 
             Polygon polygon = new Polygon();
             polygon.addPoint(0, 0);
@@ -120,24 +123,24 @@ public class IntensityOverRoiPainter extends Overlay
                 polygon.addPoint(i, (int) data[i]);
             polygon.addPoint(distance, 0);
 
-            g.setColor(Color.white);
+            g2.setColor(Color.white);
             if (sequence.getSizeC() != 1)
             {
                 if (component == 0)
-                    g.setColor(Color.red);
+                    g2.setColor(Color.red);
                 if (component == 1)
-                    g.setColor(Color.green);
+                    g2.setColor(Color.green);
                 if (component == 2)
-                    g.setColor(Color.blue);
+                    g2.setColor(Color.blue);
             }
 
             // transform to put the painter at the right place
-            g.translate(line.getX1(), line.getY1());
-            g.rotate(Math.atan2(vy, vx), 0, 0);
+            g2.translate(line.getX1(), line.getY1());
+            g2.rotate(Math.atan2(vy, vx), 0, 0);
 
-            g.draw(polygon);
+            g2.draw(polygon);
 
-            g.setTransform(originalTransform);
+            g2.dispose();
         }
     }
 }

@@ -37,15 +37,15 @@ public class IntensityOverRoi extends PluginActionable
     @Override
     public void run()
     {
+        Sequence sequence = getActiveSequence();
 
-        Sequence sequence = getFocusedSequence();
         if (sequence == null)
         {
             MessageDialog.showDialog("Please open an image first.", MessageDialog.ERROR_MESSAGE);
             return;
         }
 
-        sequence.addPainter(new IntensityOverRoiPainter());
+        sequence.addOverlay(new IntensityOverRoiPainter());
 
         new AnnounceFrame("This tutorial displays an intensity profile over compatible ROIs");
 
@@ -60,5 +60,4 @@ public class IntensityOverRoi extends PluginActionable
             sequence.addROI(roi);
         }
     }
-
 }

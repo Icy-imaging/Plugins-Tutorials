@@ -21,11 +21,18 @@ package plugins.tutorial.event;
 import icy.gui.frame.IcyFrameAdapter;
 import icy.gui.frame.IcyFrameEvent;
 import icy.gui.frame.TitledFrame;
-import icy.gui.main.MainAdapter;
-import icy.gui.main.MainEvent;
-import icy.gui.main.MainListener;
+import icy.gui.main.GlobalOverlayListener;
+import icy.gui.main.GlobalPluginListener;
+import icy.gui.main.GlobalROIListener;
+import icy.gui.main.GlobalSequenceListener;
+import icy.gui.main.GlobalViewerListener;
+import icy.gui.viewer.Viewer;
 import icy.main.Icy;
+import icy.painter.Overlay;
+import icy.plugin.abstract_.Plugin;
 import icy.plugin.abstract_.PluginActionable;
+import icy.roi.ROI;
+import icy.sequence.Sequence;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -55,104 +62,110 @@ public class MainListenerTutorial extends PluginActionable
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-        // build the global event listener
-        final MainListener mainListener = new MainAdapter()
+        // build the global event listeners
+        final GlobalSequenceListener globalSequenceListener = new GlobalSequenceListener()
         {
             @Override
-            public void painterAdded(MainEvent event)
+            public void sequenceOpened(Sequence sequence)
             {
-                area.append("painterAdded event : " + event + "\n");
+                area.append("Sequence " + sequence + " opened\n");
                 area.setCaretPosition(area.getDocument().getLength());
             }
 
             @Override
-            public void painterRemoved(MainEvent event)
+            public void sequenceClosed(Sequence sequence)
             {
-                area.append("painterRemoved event : " + event + "\n");
-                area.setCaretPosition(area.getDocument().getLength());
-            }
-
-            @Override
-            public void pluginClosed(MainEvent event)
-            {
-                area.append("pluginClosed event : " + event + "\n");
-                area.setCaretPosition(area.getDocument().getLength());
-            }
-
-            @Override
-            public void pluginOpened(MainEvent event)
-            {
-                area.append("pluginOpened event : " + event + "\n");
-                area.setCaretPosition(area.getDocument().getLength());
-            }
-
-            @Override
-            public void roiAdded(MainEvent event)
-            {
-                area.append("roiAdded event : " + event + "\n");
-                area.setCaretPosition(area.getDocument().getLength());
-            };
-
-            @Override
-            public void roiRemoved(MainEvent event)
-            {
-                area.append("roiRemoved event : " + event + "\n");
-                area.setCaretPosition(area.getDocument().getLength());
-            }
-
-            @Override
-            public void sequenceFocused(MainEvent event)
-            {
-                area.append("sequenceFocused event : " + event + "\n");
-                area.setCaretPosition(area.getDocument().getLength());
-            }
-
-            @Override
-            public void sequenceClosed(MainEvent event)
-            {
-                area.append("sequenceClosed event : " + event + "\n");
-                area.setCaretPosition(area.getDocument().getLength());
-            }
-
-            @Override
-            public void sequenceOpened(MainEvent event)
-            {
-                area.append("sequenceOpened event : " + event + "\n");
-                area.setCaretPosition(area.getDocument().getLength());
-            }
-
-            @Override
-            public void viewerClosed(MainEvent event)
-            {
-                area.append("viewerClosed event : " + event + "\n");
-                area.setCaretPosition(area.getDocument().getLength());
-            }
-
-            @Override
-            public void viewerFocused(MainEvent event)
-            {
-                area.append("viewerFocused event : " + event + "\n");
-                area.setCaretPosition(area.getDocument().getLength());
-            }
-
-            @Override
-            public void viewerOpened(MainEvent event)
-            {
-                area.append("viewerOpened event : " + event + "\n");
+                area.append("Sequence " + sequence + " closed\n");
                 area.setCaretPosition(area.getDocument().getLength());
             }
         };
 
-        // add the global event listener
-        Icy.getMainInterface().addListener(mainListener);
+        final GlobalViewerListener globalViewerListener = new GlobalViewerListener()
+        {
+            @Override
+            public void viewerOpened(Viewer viewer)
+            {
+                area.append("Viewer " + viewer + " opened\n");
+                area.setCaretPosition(area.getDocument().getLength());
+            }
+
+            @Override
+            public void viewerClosed(Viewer viewer)
+            {
+                area.append("Viewer " + viewer + " closed\n");
+                area.setCaretPosition(area.getDocument().getLength());
+            }
+        };
+
+        final GlobalOverlayListener globalOverlayListener = new GlobalOverlayListener()
+        {
+            @Override
+            public void overlayRemoved(Overlay overlay)
+            {
+                area.append("Overlay " + overlay + " removed\n");
+                area.setCaretPosition(area.getDocument().getLength());
+            }
+
+            @Override
+            public void overlayAdded(Overlay overlay)
+            {
+                area.append("Overlay " + overlay + " added\n");
+                area.setCaretPosition(area.getDocument().getLength());
+            }
+        };
+
+        final GlobalROIListener globalROIListener = new GlobalROIListener()
+        {
+            @Override
+            public void roiRemoved(ROI roi)
+            {
+                area.append("ROI " + roi + " removed\n");
+                area.setCaretPosition(area.getDocument().getLength());
+            }
+
+            @Override
+            public void roiAdded(ROI roi)
+            {
+                area.append("ROI " + roi + " added\n");
+                area.setCaretPosition(area.getDocument().getLength());
+            }
+        };
+
+        final GlobalPluginListener globalPluginListener = new GlobalPluginListener()
+        {
+            @Override
+            public void pluginStarted(Plugin plugin)
+            {
+                area.append("Plugin " + plugin + " started\n");
+                area.setCaretPosition(area.getDocument().getLength());
+            }
+
+            @Override
+            public void pluginEnded(Plugin plugin)
+            {
+                area.append("Plugin " + plugin + " ended\n");
+                area.setCaretPosition(area.getDocument().getLength());
+            }
+        };
+
+        // add the global event listeners
+        Icy.getMainInterface().addGlobalSequenceListener(globalSequenceListener);
+        Icy.getMainInterface().addGlobalViewerListener(globalViewerListener);
+        Icy.getMainInterface().addGlobalROIListener(globalROIListener);
+        Icy.getMainInterface().addGlobalOverlayListener(globalOverlayListener);
+        Icy.getMainInterface().addGlobalPluginListener(globalPluginListener);
 
         frame.addFrameListener(new IcyFrameAdapter()
         {
             @Override
             public void icyFrameClosed(IcyFrameEvent e)
             {
-                // remove the main listener so there is no more reference on plugin instance
-                Icy.getMainInterface().removeListener(mainListener);
+                // remove the listeners so there is no more reference on plugin instance
+                Icy.getMainInterface().removeGlobalSequenceListener(globalSequenceListener);
+                Icy.getMainInterface().removeGlobalViewerListener(globalViewerListener);
+                Icy.getMainInterface().removeGlobalROIListener(globalROIListener);
+                Icy.getMainInterface().removeGlobalOverlayListener(globalOverlayListener);
+                Icy.getMainInterface().removeGlobalPluginListener(globalPluginListener);
             }
         });
 

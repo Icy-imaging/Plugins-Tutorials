@@ -19,6 +19,7 @@
 package plugins.tutorial.roi;
 
 import icy.canvas.IcyCanvas;
+import icy.canvas.IcyCanvas2D;
 import icy.gui.dialog.MessageDialog;
 import icy.gui.frame.progress.AnnounceFrame;
 import icy.gui.viewer.Viewer;
@@ -26,7 +27,6 @@ import icy.gui.viewer.ViewerEvent;
 import icy.gui.viewer.ViewerEvent.ViewerEventType;
 import icy.gui.viewer.ViewerListener;
 import icy.image.IcyBufferedImage;
-import icy.painter.AbstractPainter;
 import icy.painter.Overlay;
 import icy.plugin.abstract_.PluginActionable;
 import icy.roi.BooleanMask2D;
@@ -50,14 +50,14 @@ public class ProcessingFromROI extends PluginActionable implements SequenceListe
 {
     private Viewer viewer;
     private Sequence sequence;
-    private AbstractPainter overlay;
+    private Overlay overlay;
     BufferedImage img;
     private int[] imgData;
 
     @Override
     public void run()
     {
-        viewer = getFocusedViewer();
+        viewer = getActiveViewer();
 
         // no viewer has been found ?
         if (viewer == null)
@@ -83,13 +83,17 @@ public class ProcessingFromROI extends PluginActionable implements SequenceListe
             @Override
             public void paint(Graphics2D g, Sequence sequence, IcyCanvas canvas)
             {
-                // just draw the image over the sequence
-                g.drawImage(img, null, 0, 0);
+                // check if we are dealing with a canvas 2D and we have a valid Graphics object
+                if ((canvas instanceof IcyCanvas2D) && (g != null))
+                {
+                    // just draw the image over the sequence
+                    g.drawImage(img, null, 0, 0);
+                }
             }
         };
 
         // add the overlay to the sequence
-        sequence.addPainter(overlay);
+        sequence.addOverlay(overlay);
 
         // build an ARGB image with same dimension than sequence
         img = new BufferedImage(sequence.getSizeX(), sequence.getSizeY(), BufferedImage.TYPE_INT_ARGB);
@@ -112,7 +116,7 @@ public class ProcessingFromROI extends PluginActionable implements SequenceListe
         // remove sequence listener
         sequence.removeListener(this);
         // remove the overlay from the sequence (same as painter.detachFromAll())
-        sequence.removePainter(overlay);
+        sequence.removeOverlay(overlay);
 
         // free sequence reference
         viewer = null;
@@ -124,7 +128,7 @@ public class ProcessingFromROI extends PluginActionable implements SequenceListe
         // clear image
         Arrays.fill(imgData, 0);
 
-        final IcyBufferedImage currentImage = getFocusedImage();
+        final IcyBufferedImage currentImage = getActiveImage();
 
         if (currentImage != null)
         {
@@ -174,7 +178,7 @@ public class ProcessingFromROI extends PluginActionable implements SequenceListe
 
         // notify that our overlay has changed (image data modified)
         // this automatically refresh the display
-        overlay.changed();
+        overlay.painterChanged();
     }
 
     // called when sequence has changed

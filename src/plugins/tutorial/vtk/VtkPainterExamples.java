@@ -19,9 +19,7 @@ public class VtkPainterExamples extends PluginActionable
     @Override
     public void run()
     {
-        final Sequence sequence = getFocusedSequence();
-
-        index = 1;
+        final Sequence sequence = getActiveSequence();
 
         if (sequence != null)
         {
@@ -56,7 +54,7 @@ public class VtkPainterExamples extends PluginActionable
             }
 
             // add the created VTK overlay to the sequence
-            sequence.addPainter(overlay);
+            sequence.addOverlay(overlay);
 
             index++;
         }

@@ -22,13 +22,12 @@ import icy.gui.dialog.MessageDialog;
 import icy.gui.frame.ActionFrame;
 import icy.gui.frame.IcyFrameAdapter;
 import icy.gui.frame.IcyFrameEvent;
-import icy.gui.main.MainAdapter;
-import icy.gui.main.MainEvent;
-import icy.gui.main.MainListener;
+import icy.gui.main.ActiveSequenceListener;
 import icy.gui.util.GuiUtil;
 import icy.main.Icy;
 import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
+import icy.sequence.SequenceEvent;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -62,16 +61,12 @@ public class GuiBuildExample01 extends PluginActionable implements ActionListene
         final JLabel sequenceLabel = new JLabel("", SwingConstants.CENTER);
         final JLabel sequenceNumberLabel = new JLabel();
 
-        // build the global event listener
-        final MainListener mainListener = new MainAdapter()
+        // build an active sequence listener
+        final ActiveSequenceListener activeSequenceListener = new ActiveSequenceListener()
         {
-            // event on sequence focus change
             @Override
-            public void sequenceFocused(MainEvent event)
+            public void sequenceActivated(Sequence sequence)
             {
-                // get the focused sequence (same as getFocusedSequence())
-                final Sequence sequence = (Sequence) event.getSource();
-
                 if (sequence != null)
                     sequenceLabel.setText(sequence.getName());
                 else
@@ -82,23 +77,20 @@ public class GuiBuildExample01 extends PluginActionable implements ActionListene
             }
 
             @Override
-            public void sequenceClosed(MainEvent event)
+            public void sequenceDeactivated(Sequence sequence)
             {
-                // get the focused sequence
-                final Sequence sequence = getFocusedSequence();
 
-                if (sequence != null)
-                    sequenceLabel.setText(sequence.getName());
-                else
-                    sequenceLabel.setText("no sequence");
+            }
 
-                // update the number of opened sequence
-                sequenceNumberLabel.setText("" + getSequences().size());
+            @Override
+            public void activeSequenceChanged(SequenceEvent event)
+            {
+
             }
         };
 
         // get selected sequence
-        final Sequence sequenceFocused = getFocusedSequence();
+        final Sequence sequenceFocused = getActiveSequence();
 
         // if we have one, show his name in the label
         if (sequenceFocused != null)
@@ -122,9 +114,9 @@ public class GuiBuildExample01 extends PluginActionable implements ActionListene
         // don't want frame closed after action done
         frame.setCloseAfterAction(false);
 
-        // add main listener
+        // add active sequence listener
         // WARNING : don't forget to remove it when plugin exit or instance will never die
-        Icy.getMainInterface().addListener(mainListener);
+        Icy.getMainInterface().addActiveSequenceListener(activeSequenceListener);
 
         // add a listener to frame events
         frame.addFrameListener(new IcyFrameAdapter()
@@ -133,8 +125,8 @@ public class GuiBuildExample01 extends PluginActionable implements ActionListene
             @Override
             public void icyFrameClosed(IcyFrameEvent e)
             {
-                // remove the main listener so there is no more reference on plugin instance
-                Icy.getMainInterface().removeListener(mainListener);
+                // remove the listener so there is no more reference on plugin instance
+                Icy.getMainInterface().removeActiveSequenceListener(activeSequenceListener);
             }
         });
 

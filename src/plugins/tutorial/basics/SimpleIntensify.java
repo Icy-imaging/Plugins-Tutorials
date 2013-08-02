@@ -36,7 +36,7 @@ public class SimpleIntensify extends PluginActionable
     public void run()
     {
         // get focused image
-        IcyBufferedImage image = getFocusedImage();
+        IcyBufferedImage image = getActiveImage();
 
         // check if the image exists
         if (image == null)

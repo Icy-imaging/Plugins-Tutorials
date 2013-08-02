@@ -43,8 +43,8 @@ public class CreateAreaROI extends PluginActionable
         new AnnounceFrame(
                 "This tutorial creates an Area ROI containing pixel of values greater than the mean of the band 0 of the image (t=0, z=0).");
 
-        // Get the current sequence having focus.
-        Sequence sequence = getFocusedSequence();
+        // Get the current active sequence
+        Sequence sequence = getActiveSequence();
 
         // Check if sequence exists.
         if (sequence == null)

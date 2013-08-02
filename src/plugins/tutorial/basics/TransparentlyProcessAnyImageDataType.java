@@ -43,7 +43,7 @@ public class TransparentlyProcessAnyImageDataType extends PluginActionable
                 "This tutorial fades to black the band 0 of the image, on the upper part of the image, regardless of the image dataType.");
 
         // Get the current sequence having focus.
-        Sequence sequence = getFocusedSequence();
+        Sequence sequence = getActiveSequence();
 
         // Check if sequence exists.
         if (sequence == null)
