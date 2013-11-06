@@ -23,7 +23,6 @@ import icy.canvas.IcyCanvas2D;
 import icy.image.IcyBufferedImage;
 import icy.painter.Overlay;
 import icy.roi.ROI2D;
-import icy.roi.ROI2DShape;
 import icy.sequence.Sequence;
 import icy.type.collection.array.Array1DUtil;
 import icy.util.ShapeUtil;
@@ -34,6 +33,8 @@ import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Shape;
 import java.awt.geom.Line2D;
+
+import plugins.kernel.roi.roi2d.ROI2DShape;
 
 /**
  * This painter draws an intensity profile of the image over a polyline

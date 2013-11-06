@@ -33,6 +33,7 @@ import icy.roi.BooleanMask2D;
 import icy.roi.ROI2D;
 import icy.sequence.Sequence;
 import icy.sequence.SequenceEvent;
+import icy.sequence.SequenceEvent.SequenceEventSourceType;
 import icy.sequence.SequenceListener;
 
 import java.awt.Graphics2D;
@@ -143,13 +144,13 @@ public class ProcessingFromROI extends PluginActionable implements SequenceListe
                 // get intersection between image and roi bounds
                 final Rectangle intersect = roi.getBounds().intersection(imageBounds);
                 // get the boolean mask of roi (optimized from intersection bounds)
-                final boolean[] mask = roi.getBooleanMask(intersect);
+                final boolean[] mask = roi.getBooleanMask(intersect, false);
 
                 // update global mask
                 if (globalMask == null)
                     globalMask = new BooleanMask2D(intersect, mask);
                 else
-                    globalMask.union(intersect, mask);
+                    globalMask.getUnion(intersect, mask);
             }
 
             // process only if global mask is not empty
@@ -185,14 +186,9 @@ public class ProcessingFromROI extends PluginActionable implements SequenceListe
     @Override
     public void sequenceChanged(SequenceEvent sequenceEvent)
     {
-        // we want to know about sequence roi changes
-        switch (sequenceEvent.getSourceType())
-        {
-            case SEQUENCE_ROI:
-                // roi change --> refresh
-                refresh();
-                break;
-        }
+        // sequence roi(s) changed --> refresh
+        if (sequenceEvent.getSourceType() == SequenceEventSourceType.SEQUENCE_ROI)
+            refresh();
     }
 
     // called when sequence is closed (last viewer containing sequence has changed

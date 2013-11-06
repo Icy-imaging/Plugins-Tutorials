@@ -21,10 +21,11 @@ package plugins.tutorial.roi;
 import icy.gui.dialog.MessageDialog;
 import icy.gui.frame.progress.AnnounceFrame;
 import icy.plugin.abstract_.PluginActionable;
-import icy.roi.ROI2DPolyLine;
 import icy.sequence.Sequence;
 
 import java.awt.Polygon;
+
+import plugins.kernel.roi.roi2d.ROI2DPolyLine;
 
 /**
  * This tutorial details how to create an intensity ruler.

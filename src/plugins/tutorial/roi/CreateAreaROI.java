@@ -22,9 +22,9 @@ import icy.gui.dialog.MessageDialog;
 import icy.gui.frame.progress.AnnounceFrame;
 import icy.image.IcyBufferedImage;
 import icy.plugin.abstract_.PluginActionable;
-import icy.roi.ROI2DArea;
 import icy.sequence.Sequence;
 import icy.type.collection.array.Array1DUtil;
+import plugins.kernel.roi.roi2d.ROI2DArea;
 
 /**
  * This tutorial creates an Area ROI containing pixel of values greater than the mean of the band 0
