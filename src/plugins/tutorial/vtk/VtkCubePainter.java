@@ -70,7 +70,7 @@ public class VtkCubePainter extends Overlay implements VtkPainter
 
         // add actor to the renderer
         final vtkPolyDataMapper polyMapper = new vtkPolyDataMapper();
-        polyMapper.SetInput(polyData);
+        polyMapper.SetInputData(polyData);
 
         cubeActor = new vtkActor();
         cubeActor.SetMapper(polyMapper);

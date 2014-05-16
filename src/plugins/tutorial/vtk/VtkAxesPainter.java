@@ -18,7 +18,6 @@
  */
 package plugins.tutorial.vtk;
 
-import icy.canvas.Canvas3D;
 import icy.canvas.IcyCanvas;
 import icy.painter.Overlay;
 import icy.painter.VtkPainter;
@@ -26,6 +25,7 @@ import icy.sequence.Sequence;
 
 import java.awt.Graphics2D;
 
+import plugins.kernel.canvas.VtkCanvas;
 import vtk.vtkAxisActor;
 import vtk.vtkCamera;
 import vtk.vtkCubeAxesActor;
@@ -75,9 +75,9 @@ public class VtkAxesPainter extends Overlay implements VtkPainter
     {
         // super.paint(g, sequence, canvas);
 
-        if (canvas instanceof Canvas3D)
+        if (canvas instanceof VtkCanvas)
         {
-            final Canvas3D c3d = (Canvas3D) canvas;
+            final VtkCanvas c3d = (VtkCanvas) canvas;
             final vtkCamera camera = c3d.getRenderer().GetActiveCamera();
 
             if (cubeAxesActor.GetCamera() != camera)

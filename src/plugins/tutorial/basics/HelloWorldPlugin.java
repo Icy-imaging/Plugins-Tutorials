@@ -30,10 +30,10 @@ import icy.plugin.abstract_.PluginActionable;
  */
 public class HelloWorldPlugin extends PluginActionable
 {
-    // This method will be called as the user click on the plugin button.
+    // This method is called when user click on the plugin button.
     @Override
     public void run()
     {
-        new AnnounceFrame("Hello ICY !");
+        new AnnounceFrame("Hello World !");
     }
 }

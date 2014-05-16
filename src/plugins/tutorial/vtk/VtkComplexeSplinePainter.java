@@ -93,11 +93,11 @@ public class VtkComplexeSplinePainter extends Overlay implements VtkPainter
         balls.SetThetaResolution(10);
 
         final vtkGlyph3D glyphPoints = new vtkGlyph3D();
-        glyphPoints.SetInput(inputData);
-        glyphPoints.SetSource(balls.GetOutput());
+        glyphPoints.SetInputData(inputData);
+        glyphPoints.SetSourceData(balls.GetOutput());
 
         final vtkPolyDataMapper glyphMapper = new vtkPolyDataMapper();
-        glyphMapper.SetInput(glyphPoints.GetOutput());
+        glyphMapper.SetInputData(glyphPoints.GetOutput());
 
         glyph = new vtkActor();
         glyph.SetMapper(glyphMapper);
@@ -132,12 +132,12 @@ public class VtkComplexeSplinePainter extends Overlay implements VtkPainter
         // Add thickness to the resulting line.
         final vtkTubeFilter profileTubes = new vtkTubeFilter();
         profileTubes.SetNumberOfSides(8);
-        profileTubes.SetInput(profileData);
+        profileTubes.SetInputData(profileData);
         // profileTubes.SetRadius(.01);
         profileTubes.SetRadius(1);
 
         final vtkPolyDataMapper profileMapper = new vtkPolyDataMapper();
-        profileMapper.SetInput(profileTubes.GetOutput());
+        profileMapper.SetInputData(profileTubes.GetOutput());
 
         profile = new vtkActor();
         profile.SetMapper(profileMapper);

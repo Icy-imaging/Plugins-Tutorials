@@ -61,7 +61,7 @@ public class VtkAnimatedEarthPainter extends Overlay implements ActionListener, 
         earth.SetRadius(150);
 
         final vtkPolyDataMapper earthMapper = new vtkPolyDataMapper();
-        earthMapper.SetInput(earth.GetOutput());
+        earthMapper.SetInputData(earth.GetOutput());
 
         earthActor = new vtkActor();
         earthActor.SetMapper(earthMapper);

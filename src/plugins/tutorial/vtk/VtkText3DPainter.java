@@ -49,7 +49,7 @@ public class VtkText3DPainter extends Overlay implements VtkPainter
         atext.SetText("Origin");
 
         final vtkPolyDataMapper textMapper = new vtkPolyDataMapper();
-        textMapper.SetInput(atext.GetOutput());
+        textMapper.SetInputData(atext.GetOutput());
 
         textActor = new vtkFollower();
         textActor.SetMapper(textMapper);

@@ -18,7 +18,6 @@
  */
 package plugins.tutorial.vtk;
 
-import icy.canvas.Canvas3D;
 import icy.canvas.IcyCanvas;
 import icy.painter.Overlay;
 import icy.painter.VtkPainter;
@@ -26,6 +25,7 @@ import icy.sequence.Sequence;
 
 import java.awt.Graphics2D;
 
+import plugins.kernel.canvas.VtkCanvas;
 import vtk.vtkActor2D;
 import vtk.vtkCubeSource;
 import vtk.vtkLabeledDataMapper;
@@ -57,13 +57,13 @@ public class VtkLabelPainter extends Overlay implements VtkPainter
 
         // Create labels for points
         visPts = new vtkSelectVisiblePoints();
-        visPts.SetInput(cubeSource.GetOutput());
+        visPts.SetInputData(cubeSource.GetOutput());
 
         // Create the mapper to display the point ids. Specify the format to
         // use for the labels. Also create the associated actor.
         final vtkLabeledDataMapper ldm = new vtkLabeledDataMapper();
 
-        ldm.SetInput(visPts.GetOutput());
+        ldm.SetInputData(visPts.GetOutput());
         ldm.SetLabelFormat("%g");
         ldm.SetLabelModeToLabelFieldData();
 
@@ -74,9 +74,9 @@ public class VtkLabelPainter extends Overlay implements VtkPainter
     @Override
     public void paint(Graphics2D g, Sequence sequence, IcyCanvas canvas)
     {
-        if (canvas instanceof Canvas3D)
+        if (canvas instanceof VtkCanvas)
         {
-            final vtkRenderer renderer = ((Canvas3D) canvas).getRenderer();
+            final vtkRenderer renderer = ((VtkCanvas) canvas).getRenderer();
 
             if (visPts.GetRenderer() == null)
                 visPts.SetRenderer(renderer);
