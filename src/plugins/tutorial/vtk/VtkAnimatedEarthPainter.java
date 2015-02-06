@@ -20,6 +20,7 @@ package plugins.tutorial.vtk;
 
 import icy.painter.Overlay;
 import icy.painter.VtkPainter;
+import icy.system.thread.ThreadUtil;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,9 +38,9 @@ import vtk.vtkProp;
 public class VtkAnimatedEarthPainter extends Overlay implements ActionListener, VtkPainter
 {
     // vtk object
-    private vtkActor earthActor;
-
-    private double posX, posY, posZ;
+    vtkActor earthActor;
+    double posX, posY, posZ;
+    final Timer timer;
 
     public VtkAnimatedEarthPainter()
     {
@@ -49,7 +50,8 @@ public class VtkAnimatedEarthPainter extends Overlay implements ActionListener, 
         posX = posY = posZ = 0;
 
         // start update timer
-        new Timer(20, this).start();
+        timer = new Timer(20, this);
+        timer.start();
     }
 
     // init vtk objects
@@ -61,7 +63,7 @@ public class VtkAnimatedEarthPainter extends Overlay implements ActionListener, 
         earth.SetRadius(150);
 
         final vtkPolyDataMapper earthMapper = new vtkPolyDataMapper();
-        earthMapper.SetInputData(earth.GetOutput());
+        earthMapper.SetInputConnection(earth.GetOutputPort());
 
         earthActor = new vtkActor();
         earthActor.SetMapper(earthMapper);
@@ -70,8 +72,15 @@ public class VtkAnimatedEarthPainter extends Overlay implements ActionListener, 
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        // update position
-        earthActor.SetOrientation(++posX, posY, posZ);
+        ThreadUtil.invokeNow(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                // update position
+                earthActor.SetOrientation(posX++, posY, posZ);
+            }
+        });
 
         // notify overlay changed (refresh display)
         painterChanged();

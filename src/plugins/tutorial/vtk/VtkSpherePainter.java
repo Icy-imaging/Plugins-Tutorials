@@ -50,7 +50,7 @@ public class VtkSpherePainter extends Overlay implements VtkPainter
 
         // mapper
         final vtkPolyDataMapper map = new vtkPolyDataMapper();
-        map.SetInputData(sphere.GetOutput());
+        map.SetInputConnection(sphere.GetOutputPort());
 
         // actor
         aSphere = new vtkActor();

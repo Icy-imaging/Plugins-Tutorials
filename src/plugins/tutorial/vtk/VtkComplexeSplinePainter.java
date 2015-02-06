@@ -20,11 +20,11 @@ package plugins.tutorial.vtk;
 
 import icy.painter.Overlay;
 import icy.painter.VtkPainter;
+import icy.util.Random;
 import vtk.vtkActor;
 import vtk.vtkCardinalSpline;
 import vtk.vtkCellArray;
 import vtk.vtkGlyph3D;
-import vtk.vtkMath;
 import vtk.vtkPoints;
 import vtk.vtkPolyData;
 import vtk.vtkPolyDataMapper;
@@ -52,7 +52,6 @@ public class VtkComplexeSplinePainter extends Overlay implements VtkPainter
     private void init()
     {
         // This will be used later to get random numbers.
-        final vtkMath math = new vtkMath();
         // Total number of points.
         final int numberOfInputPoints = 20;
 
@@ -69,9 +68,9 @@ public class VtkComplexeSplinePainter extends Overlay implements VtkPainter
         final vtkPoints inputPoints = new vtkPoints();
         for (int i = 0; i < numberOfInputPoints; i++)
         {
-            final double x = 200 * math.Random(0, 1);
-            final double y = 100 * math.Random(0, 1);
-            final double z = 50 * math.Random(0, 1);
+            final double x = 200 * Random.nextDouble();
+            final double y = 100 * Random.nextDouble();
+            final double z = 50 * Random.nextDouble();
             aSplineX.AddPoint(i, x);
             aSplineY.AddPoint(i, y);
             aSplineZ.AddPoint(i, z);
@@ -94,10 +93,10 @@ public class VtkComplexeSplinePainter extends Overlay implements VtkPainter
 
         final vtkGlyph3D glyphPoints = new vtkGlyph3D();
         glyphPoints.SetInputData(inputData);
-        glyphPoints.SetSourceData(balls.GetOutput());
+        glyphPoints.SetSourceConnection(balls.GetOutputPort());
 
         final vtkPolyDataMapper glyphMapper = new vtkPolyDataMapper();
-        glyphMapper.SetInputData(glyphPoints.GetOutput());
+        glyphMapper.SetInputConnection(glyphPoints.GetOutputPort());
 
         glyph = new vtkActor();
         glyph.SetMapper(glyphMapper);
@@ -137,7 +136,7 @@ public class VtkComplexeSplinePainter extends Overlay implements VtkPainter
         profileTubes.SetRadius(1);
 
         final vtkPolyDataMapper profileMapper = new vtkPolyDataMapper();
-        profileMapper.SetInputData(profileTubes.GetOutput());
+        profileMapper.SetInputConnection(profileTubes.GetOutputPort());
 
         profile = new vtkActor();
         profile.SetMapper(profileMapper);
@@ -151,6 +150,7 @@ public class VtkComplexeSplinePainter extends Overlay implements VtkPainter
     @Override
     public vtkProp[] getProps()
     {
+//        return new vtkProp[] {glyph};
         return new vtkProp[] {glyph, profile};
     }
 

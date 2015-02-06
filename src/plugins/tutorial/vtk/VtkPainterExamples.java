@@ -24,7 +24,7 @@ public class VtkPainterExamples extends PluginActionable
         if (sequence != null)
         {
             final Overlay overlay;
-
+            
             switch (index % 8)
             {
                 default:
