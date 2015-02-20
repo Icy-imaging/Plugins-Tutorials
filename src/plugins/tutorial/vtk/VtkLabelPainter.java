@@ -57,13 +57,13 @@ public class VtkLabelPainter extends Overlay implements VtkPainter
 
         // Create labels for points
         visPts = new vtkSelectVisiblePoints();
-        visPts.SetInputData(cubeSource.GetOutput());
+        visPts.SetInputConnection(cubeSource.GetOutputPort());
 
         // Create the mapper to display the point ids. Specify the format to
         // use for the labels. Also create the associated actor.
         final vtkLabeledDataMapper ldm = new vtkLabeledDataMapper();
 
-        ldm.SetInputData(visPts.GetOutput());
+        ldm.SetInputConnection(visPts.GetOutputPort());
         ldm.SetLabelFormat("%g");
         ldm.SetLabelModeToLabelFieldData();
 
