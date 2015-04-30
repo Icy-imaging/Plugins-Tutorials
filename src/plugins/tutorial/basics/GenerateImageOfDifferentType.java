@@ -26,7 +26,8 @@ import icy.type.DataType;
 /**
  * This plugin generates image of all types supported by ICY.
  * 
- * @author Stephane Dallongeville / Fabrice de Chaumont
+ * @author Stephane Dallongeville
+ * @author Fabrice de Chaumont
  */
 
 public class GenerateImageOfDifferentType extends PluginActionable

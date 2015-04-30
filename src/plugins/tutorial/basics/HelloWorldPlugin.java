@@ -26,7 +26,8 @@ import icy.plugin.abstract_.PluginActionable;
  * A class is an ICY plugin as it extends icy.plugin.abstract_.Plugin
  * It can then be visible in the menu if it implements icy.plugin.interface_.PluginImageAnalysis
  * 
- * @author Fabrice de Chaumont & Stephane Dallongeville
+ * @author Fabrice de Chaumont
+ * @author Stephane Dallongeville
  */
 public class HelloWorldPlugin extends PluginActionable
 {

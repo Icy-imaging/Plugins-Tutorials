@@ -1,4 +1,7 @@
-package plugins.tutorial.basics;
+/**
+ * 
+ */
+package plugins.tutorial.training;
 
 import icy.gui.dialog.MessageDialog;
 import icy.image.IcyBufferedImage;
@@ -7,12 +10,18 @@ import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
 import icy.type.collection.array.Array1DUtil;
 
-public class MaxZProjectionTutorial extends PluginActionable
+/**
+ * Basic image processing plugin example: apply a maximum intensity projection along Z axis on the
+ * active sequence
+ * 
+ * @author Stephane
+ */
+public class MaximumZProjectionPlugin extends PluginActionable
 {
+
     @Override
     public void run()
     {
-        // get the current sequence having focus.
         Sequence sequence = getActiveSequence();
 
         // check if a sequence is opened
@@ -22,68 +31,69 @@ public class MaxZProjectionTutorial extends PluginActionable
             return;
         }
 
-        // create the new empty result sequence
-        Sequence result = new Sequence(sequence.getName() + "- Z projection");
+        // create a new empty sequence by using the original sequence name
+        Sequence result = new Sequence(sequence.getName() + " - Z projection");
 
         // start sequence modification
         result.beginUpdate();
         try
         {
-            // for each frame
+            // for each frame of the sequence
             for (int t = 0; t < sequence.getSizeT(); t++)
             {
-                // get the Z maximum projection
+                // compute the Z projection for the specified frame of sequence
                 IcyBufferedImage image = getMaxZProjection(sequence, t);
-                // set result at T position
+                // set the image result at frame position t in the result Sequence
                 result.setImage(t, 0, image);
             }
         }
         finally
         {
-            // end sequence modification
+            // we are done with sequence modification
             result.endUpdate();
         }
 
-        // display result
+        // make the sequence visible (add it to the GUI)
         addSequence(result);
     }
 
-    private IcyBufferedImage getMaxZProjection(Sequence sequence, int t)
+    IcyBufferedImage getMaxZProjection(Sequence sequence, int t)
     {
-        // create a new empty image with the same dimension and data type than input sequence
+        // create a new image with same size and data type as the original Sequence
         IcyBufferedImage result = new IcyBufferedImage(sequence.getSizeX(), sequence.getSizeY(), sequence.getSizeC(),
                 sequence.getDataType_());
 
-        // for each channel
+        // for each channel of the input Sequence
         for (int c = 0; c < sequence.getSizeC(); c++)
         {
-            // transform data array to double data array for easy processing
+            // convert the result image data to double type for calculations
             double[] doubleArray = Array1DUtil.arrayToDoubleArray(result.getDataXY(c), result.isSignedDataType());
 
-            // for each Z slice
+            // for each Z slice of the input Sequence
             for (int z = 0; z < sequence.getSizeZ(); z++)
-                // compute the maximum between the Z slice data and the current result
+                // compute the maximum between the specified slice data and the result array
                 projectMax(sequence, t, z, c, doubleArray);
 
-            // convert back double array to original data type
+            // convert back the double array to original image data type
             Array1DUtil.doubleArrayToArray(doubleArray, result.getDataXY(c));
         }
 
-        // inform the image that we have modified its data
+        // Inform that image data has changed
         result.dataChanged();
 
         return result;
     }
 
-    private void projectMax(Sequence sequence, int t, int z, int c, double[] result)
+    void projectMax(Sequence sequence, int t, int z, int c, double[] result)
     {
-        // get XY plan image data at specified T, Z and C position
+        // get XY planar image data array for the specified T, Z and C position
         Object dataArray = sequence.getDataXY(t, z, c);
 
-        // transform data array to double data array for easy processing
+        // convert to double data array
         double[] imgDoubleArray = Array1DUtil.arrayToDoubleArray(dataArray, sequence.isSignedDataType());
 
-        // compute the maximum
+        // get the maximum from the 2 input arrays and save the result
+        // into the result array by using the ArrayMath.max(..) method
         ArrayMath.max(result, imgDoubleArray, result);
     }
 }

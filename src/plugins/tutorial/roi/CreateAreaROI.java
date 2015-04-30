@@ -28,10 +28,10 @@ import plugins.kernel.roi.roi2d.ROI2DArea;
 
 /**
  * This tutorial creates an Area ROI containing pixel of values greater than the mean of the band 0
- * of the image (t=0, z=0).
- * It creates a ROI2DArea
+ * of the image (t=0, z=0). It creates a ROI2DArea
  * 
- * @author Fabrice de Chaumont, Stephane Dallongeville
+ * @author Fabrice de Chaumont
+ * @author Stephane Dallongeville
  */
 public class CreateAreaROI extends PluginActionable
 {

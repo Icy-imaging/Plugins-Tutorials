@@ -8,7 +8,6 @@ import plugins.kernel.roi.roi2d.ROI2DArea;
 
 public class ThresholdPlugin1 extends PluginActionable
 {
-
     @Override
     public void run()
     {

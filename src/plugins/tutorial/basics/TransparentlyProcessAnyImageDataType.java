@@ -30,7 +30,8 @@ import icy.type.collection.array.Array1DUtil;
  * knowledge of the original data type. The image will be convert to a 1D array of double,
  * then the process can be performed and stored back to the original image.
  * 
- * @author Fabrice de Chaumont & Stephane Dallongeville
+ * @author Fabrice de Chaumont
+ * @author Stephane Dallongeville
  */
 public class TransparentlyProcessAnyImageDataType extends PluginActionable
 {

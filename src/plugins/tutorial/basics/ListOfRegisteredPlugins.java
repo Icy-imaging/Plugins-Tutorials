@@ -28,7 +28,8 @@ import icy.plugin.abstract_.PluginActionable;
  * It uses the PluginLoader and the PluginDescriptor classes.
  * The display is in the stdio.
  * 
- * @author Fabrice de Chaumont and Stephane Dallongeville
+ * @author Fabrice de Chaumont
+ * @author Stephane Dallongeville
  */
 public class ListOfRegisteredPlugins extends PluginActionable
 {

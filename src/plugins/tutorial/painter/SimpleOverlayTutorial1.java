@@ -35,7 +35,8 @@ import java.awt.geom.Point2D;
 /**
  * This example displays a simple cross over the sequence.
  * 
- * @author Fabrice de Chaumont & Stephane Dallongeville
+ * @author Fabrice de Chaumont
+ * @author Stephane Dallongeville
  */
 public class SimpleOverlayTutorial1 extends PluginActionable
 {

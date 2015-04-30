@@ -9,7 +9,8 @@ import icy.plugin.interface_.PluginThreaded;
  * To make it harder to catch by ICY, we add the PluginStartAsThread interface, which starts the
  * plugin as a thread.
  * 
- * @author Fabrice de Chaumont and Stephane Dallongeville
+ * @author Fabrice de Chaumont
+ * @author Stephane Dallongeville
  */
 public class GenerateABugTutorial extends PluginActionable implements PluginThreaded
 {

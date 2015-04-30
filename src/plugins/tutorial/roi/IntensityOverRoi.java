@@ -31,7 +31,8 @@ import plugins.kernel.roi.roi2d.ROI2DPolyLine;
  * This tutorial details how to create an intensity ruler.
  * Look at IntensityRulerPainter for the most interesting part.
  * 
- * @author Fabrice de Chaumont & Stephane Dallongeville
+ * @author Fabrice de Chaumont
+ * @author Stephane Dallongeville
  */
 public class IntensityOverRoi extends PluginActionable
 {

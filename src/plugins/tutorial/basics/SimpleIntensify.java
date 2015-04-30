@@ -28,7 +28,7 @@ import icy.type.collection.array.Array1DUtil;
 /**
  * This plugin do a simple intensify operation on current opened image
  * 
- * @author Stephane & Fabrice
+ * @author Stephane
  */
 public class SimpleIntensify extends PluginActionable
 {

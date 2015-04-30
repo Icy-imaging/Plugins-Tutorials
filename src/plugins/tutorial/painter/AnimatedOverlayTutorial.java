@@ -32,7 +32,8 @@ import java.awt.geom.Point2D;
 /**
  * This tutorial displays a fancy marked animation at each click.
  * 
- * @author Fabrice de Chaumont / Stephane Dallongeville
+ * @author Fabrice de Chaumont
+ * @author Stephane Dallongeville
  */
 public class AnimatedOverlayTutorial extends PluginActionable
 {

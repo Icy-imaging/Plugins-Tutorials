@@ -39,7 +39,8 @@ import plugins.kernel.roi.roi2d.ROI2DShape;
 /**
  * This painter draws an intensity profile of the image over a polyline
  * 
- * @author Fabrice de Chaumont and Stephane Dallongeville
+ * @author Fabrice de Chaumont
+ * @author Stephane Dallongeville
  */
 public class IntensityOverRoiPainter extends Overlay
 {
@@ -68,7 +69,7 @@ public class IntensityOverRoiPainter extends Overlay
         }
     }
 
-    private void computeIntensityROI(ROI2DShape roi, final Graphics2D g, final Sequence sequence, final IcyCanvas canvas)
+    private static void computeIntensityROI(ROI2DShape roi, final Graphics2D g, final Sequence sequence, final IcyCanvas canvas)
     {
         ShapeUtil.consumeShapeFromPath(roi.getPathIterator(null), new ShapeConsumer()
         {
@@ -83,7 +84,7 @@ public class IntensityOverRoiPainter extends Overlay
         });
     }
 
-    void drawHisto(Line2D line, Graphics2D g, Sequence sequence, final IcyCanvas canvas)
+    static void drawHisto(Line2D line, Graphics2D g, Sequence sequence, final IcyCanvas canvas)
     {
         for (int component = 0; component < sequence.getSizeC(); component++)
         {

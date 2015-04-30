@@ -40,7 +40,8 @@ import javax.swing.Timer;
 /**
  * Fancy mark to demonstrate the capabilities of painters.
  * 
- * @author Fabrice de Chaumont and Stephane Dallongeville
+ * @author Fabrice de Chaumont
+ * @author Stephane Dallongeville
  */
 public class AnimatedOverlay extends Overlay implements ActionListener
 {

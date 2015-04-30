@@ -20,7 +20,6 @@ import java.awt.geom.Point2D;
  */
 public class OverlayPlugin1 extends PluginActionable
 {
-
     public class SimpleCrossOverlay extends Overlay
     {
         public SimpleCrossOverlay()
