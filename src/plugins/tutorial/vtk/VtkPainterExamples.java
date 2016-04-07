@@ -24,14 +24,14 @@ public class VtkPainterExamples extends PluginActionable
         if (sequence != null)
         {
             final Overlay overlay;
-            
-            switch (index % 8)
+
+            switch (index % 7)
             {
                 default:
                     overlay = new VtkAnimatedEarthPainter();
                     break;
                 case 1:
-                    overlay = new VtkAxesPainter();
+                    overlay = new VtkText3DPainter();
                     break;
                 case 2:
                     overlay = new VtkComplexeSplinePainter();
@@ -47,9 +47,6 @@ public class VtkPainterExamples extends PluginActionable
                     break;
                 case 6:
                     overlay = new VtkText2DPainter();
-                    break;
-                case 7:
-                    overlay = new VtkText3DPainter();
                     break;
             }
 

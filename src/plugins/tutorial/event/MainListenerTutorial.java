@@ -42,7 +42,8 @@ import javax.swing.ScrollPaneConstants;
  * This class demonstrate how use the MainListener to track global event
  * on Viewer, Sequence, ROI and Painter objects
  * 
- * @author Stephane & Fab
+ * @author Stephane
+ * @author Fab
  */
 public class MainListenerTutorial extends PluginActionable
 {

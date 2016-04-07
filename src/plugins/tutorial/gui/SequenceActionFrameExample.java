@@ -31,7 +31,8 @@ import javax.swing.JLabel;
 /**
  * This example demonstrates a simple use of the SequenceActionFrame object
  * 
- * @author Stephane & Fab
+ * @author Stephane
+ * @author Fab
  */
 public class SequenceActionFrameExample extends PluginActionable
 {

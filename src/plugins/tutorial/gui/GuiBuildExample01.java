@@ -43,7 +43,8 @@ import javax.swing.SwingConstants;
 /**
  * Plugin Example: A simple interface with some features.
  * 
- * @author Fabrice & Stephane
+ * @author Fabrice
+ * @author Stephane
  */
 public class GuiBuildExample01 extends PluginActionable implements ActionListener
 {
