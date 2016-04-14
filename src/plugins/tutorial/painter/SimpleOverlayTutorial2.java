@@ -25,13 +25,13 @@ import icy.gui.frame.progress.AnnounceFrame;
 import icy.painter.Overlay;
 import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
+import icy.type.point.Point5D;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 /**
@@ -80,7 +80,7 @@ public class SimpleOverlayTutorial2 extends PluginActionable
         }
 
         @Override
-        public void keyPressed(KeyEvent e, Point2D imagePoint, IcyCanvas canvas)
+        public void keyPressed(KeyEvent e, Point5D.Double imagePoint, IcyCanvas canvas)
         {
             // check if we are dealing with a 2D canvas
             if (canvas instanceof IcyCanvas2D)
@@ -92,7 +92,7 @@ public class SimpleOverlayTutorial2 extends PluginActionable
         }
 
         @Override
-        public void mouseClick(MouseEvent e, Point2D imagePoint, IcyCanvas canvas)
+        public void mouseClick(MouseEvent e, Point5D.Double imagePoint, IcyCanvas canvas)
         {
             // check if we are dealing with a 2D canvas and we have a valid image position
             if ((canvas instanceof IcyCanvas2D) && (imagePoint != null))
@@ -112,7 +112,7 @@ public class SimpleOverlayTutorial2 extends PluginActionable
         }
 
         @Override
-        public void mouseDrag(MouseEvent e, Point2D imagePoint, IcyCanvas canvas)
+        public void mouseDrag(MouseEvent e, Point5D.Double imagePoint, IcyCanvas canvas)
         {
             // check if we are dealing with a 2D canvas
             if ((canvas instanceof IcyCanvas2D) && (imagePoint != null))
@@ -129,7 +129,7 @@ public class SimpleOverlayTutorial2 extends PluginActionable
         }
 
         @Override
-        public void mouseMove(MouseEvent e, Point2D imagePoint, IcyCanvas canvas)
+        public void mouseMove(MouseEvent e, Point5D.Double imagePoint, IcyCanvas canvas)
         {
             // check if we are dealing with a 2D canvas
             if ((canvas instanceof IcyCanvas2D) && (imagePoint != null))

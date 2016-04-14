@@ -8,12 +8,12 @@ import icy.gui.dialog.MessageDialog;
 import icy.painter.Overlay;
 import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
+import icy.type.point.Point5D;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
 
 /**
  * @author Stephane
@@ -41,7 +41,7 @@ public class OverlayPlugin1 extends PluginActionable
         }
 
         @Override
-        public void mouseClick(MouseEvent e, Point2D point, IcyCanvas canvas)
+        public void mouseClick(MouseEvent e, Point5D.Double point, IcyCanvas canvas)
         {
             // remove the overlay when the user clicks on the image
             remove();

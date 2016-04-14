@@ -25,9 +25,9 @@ import icy.gui.frame.progress.AnnounceFrame;
 import icy.painter.Overlay;
 import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
+import icy.type.point.Point5D;
 
 import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
 
 /**
  * This tutorial displays a fancy marked animation at each click.
@@ -68,14 +68,14 @@ public class AnimatedOverlayTutorial extends PluginActionable
         }
 
         @Override
-        public void mouseClick(MouseEvent e, Point2D imagePoint, IcyCanvas canvas)
+        public void mouseClick(MouseEvent e, Point5D.Double imagePoint, IcyCanvas canvas)
         {
             // check if we are dealing with a 2D canvas and we have a valid image position
             if ((canvas instanceof IcyCanvas2D) && (imagePoint != null))
             {
                 // get all sequence where the overlay is attached
                 for (Sequence sequence : getSequences())
-                    sequence.addOverlay(new AnimatedOverlay(imagePoint));
+                    sequence.addOverlay(new AnimatedOverlay(imagePoint.toPoint2D()));
             }
         }
     }

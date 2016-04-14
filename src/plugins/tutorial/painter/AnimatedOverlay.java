@@ -22,6 +22,7 @@ import icy.canvas.IcyCanvas;
 import icy.canvas.IcyCanvas2D;
 import icy.painter.Overlay;
 import icy.sequence.Sequence;
+import icy.type.point.Point5D;
 
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
@@ -130,12 +131,12 @@ public class AnimatedOverlay extends Overlay implements ActionListener
     }
 
     @Override
-    public void mouseMove(MouseEvent e, Point2D imagePoint, IcyCanvas canvas)
+    public void mouseMove(MouseEvent e, Point5D.Double imagePoint, IcyCanvas canvas)
     {
         // check if we are dealing with a 2D canvas and we have a valid image position
         if ((canvas instanceof IcyCanvas2D) && (imagePoint != null))
         {
-            mouse = (Point2D) imagePoint.clone();
+            mouse = imagePoint.toPoint2D();
         }
     }
 
