@@ -62,5 +62,4 @@ public class VtkText3DPainter extends Overlay implements VtkPainter
     {
         return new vtkActor[] {textActor};
     }
-
 }

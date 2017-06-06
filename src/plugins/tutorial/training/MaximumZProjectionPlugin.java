@@ -57,7 +57,7 @@ public class MaximumZProjectionPlugin extends PluginActionable
         addSequence(result);
     }
 
-    IcyBufferedImage getMaxZProjection(Sequence sequence, int t)
+    static IcyBufferedImage getMaxZProjection(Sequence sequence, int t)
     {
         // create a new image with same size and data type as the original Sequence
         IcyBufferedImage result = new IcyBufferedImage(sequence.getSizeX(), sequence.getSizeY(), sequence.getSizeC(),
@@ -84,7 +84,7 @@ public class MaximumZProjectionPlugin extends PluginActionable
         return result;
     }
 
-    void projectMax(Sequence sequence, int t, int z, int c, double[] result)
+    static void projectMax(Sequence sequence, int t, int z, int c, double[] result)
     {
         // get XY planar image data array for the specified T, Z and C position
         Object dataArray = sequence.getDataXY(t, z, c);

@@ -18,6 +18,13 @@
  */
 package plugins.tutorial.painter;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
+
 import icy.canvas.IcyCanvas;
 import icy.canvas.IcyCanvas2D;
 import icy.gui.dialog.MessageDialog;
@@ -26,13 +33,6 @@ import icy.painter.Overlay;
 import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.Sequence;
 import icy.type.point.Point5D;
-
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
 
 /**
  * This plugin shows interaction of painters with users.

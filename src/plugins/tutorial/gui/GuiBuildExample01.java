@@ -18,17 +18,6 @@
  */
 package plugins.tutorial.gui;
 
-import icy.gui.dialog.MessageDialog;
-import icy.gui.frame.ActionFrame;
-import icy.gui.frame.IcyFrameAdapter;
-import icy.gui.frame.IcyFrameEvent;
-import icy.gui.main.ActiveSequenceListener;
-import icy.gui.util.GuiUtil;
-import icy.main.Icy;
-import icy.plugin.abstract_.PluginActionable;
-import icy.sequence.Sequence;
-import icy.sequence.SequenceEvent;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -39,6 +28,17 @@ import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import icy.gui.dialog.MessageDialog;
+import icy.gui.frame.ActionFrame;
+import icy.gui.frame.IcyFrameAdapter;
+import icy.gui.frame.IcyFrameEvent;
+import icy.gui.main.ActiveSequenceListener;
+import icy.gui.util.GuiUtil;
+import icy.main.Icy;
+import icy.plugin.abstract_.PluginActionable;
+import icy.sequence.Sequence;
+import icy.sequence.SequenceEvent;
 
 /**
  * Plugin Example: A simple interface with some features.
@@ -80,13 +80,13 @@ public class GuiBuildExample01 extends PluginActionable implements ActionListene
             @Override
             public void sequenceDeactivated(Sequence sequence)
             {
-
+                //
             }
 
             @Override
             public void activeSequenceChanged(SequenceEvent event)
             {
-
+                //
             }
         };
 

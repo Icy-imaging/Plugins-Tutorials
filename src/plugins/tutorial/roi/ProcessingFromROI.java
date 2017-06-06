@@ -18,6 +18,12 @@
  */
 package plugins.tutorial.roi;
 
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
+import java.util.Arrays;
+
 import icy.canvas.IcyCanvas;
 import icy.canvas.IcyCanvas2D;
 import icy.gui.dialog.MessageDialog;
@@ -35,12 +41,6 @@ import icy.sequence.Sequence;
 import icy.sequence.SequenceEvent;
 import icy.sequence.SequenceEvent.SequenceEventSourceType;
 import icy.sequence.SequenceListener;
-
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
-import java.util.Arrays;
 
 /**
  * This class show how we can use ROI to do localized operation on image
@@ -195,6 +195,7 @@ public class ProcessingFromROI extends PluginActionable implements SequenceListe
     @Override
     public void sequenceClosed(Sequence sequence)
     {
+        //
     }
 
     @Override
