@@ -66,8 +66,11 @@ public class MaximumZProjectionPlugin extends PluginActionable
         // for each channel of the input Sequence
         for (int c = 0; c < sequence.getSizeC(); c++)
         {
+            // get a direct reference on the XY planar image data array
+            Object dataArray = result.getDataXY(c);
+
             // convert the result image data to double type for calculations
-            double[] doubleArray = Array1DUtil.arrayToDoubleArray(result.getDataXY(c), result.isSignedDataType());
+            double[] doubleArray = Array1DUtil.arrayToDoubleArray(dataArray, result.isSignedDataType());
 
             // for each Z slice of the input Sequence
             for (int z = 0; z < sequence.getSizeZ(); z++)
@@ -75,11 +78,11 @@ public class MaximumZProjectionPlugin extends PluginActionable
                 projectMax(sequence, t, z, c, doubleArray);
 
             // convert back the double array to original image data type
-            Array1DUtil.doubleArrayToArray(doubleArray, result.getDataXY(c));
-        }
+            Array1DUtil.doubleArrayToArray(doubleArray, dataArray);
 
-        // Inform that image data has changed
-        result.dataChanged();
+            // just to let the image know the data has changed (internal updates and view refresh) and also to update cache for volatile image
+            result.setDataXY(0, dataArray);
+        }
 
         return result;
     }

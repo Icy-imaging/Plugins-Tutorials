@@ -59,9 +59,9 @@ public class SimpleIntensify extends PluginActionable
 
         // transform data back to original data type.
         // 'Safe' methods take care of overflow with the destination data type.
-        Array1DUtil.doubleArrayToSafeArray(doubleDataArray, image.getDataXY(0), image.isSignedDataType());
+        Array1DUtil.doubleArrayToSafeArray(doubleDataArray, dataArray, image.isSignedDataType());
 
-        // notify the data has changed (internal updates and view refresh)
-        image.dataChanged();
+        // just to let the image know the data has changed (internal updates and view refresh) and also to update cache for volatile image
+        image.setDataXY(0, dataArray);
     }
 }

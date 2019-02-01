@@ -11,6 +11,6 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
-        <javaElement handleIdentifier="=Plugins-Tutorials/src&lt;plugins.tutorial.basics{MaxZProjectionTutorial.java"/>
+        <javaElement handleIdentifier="=Plugins-Tutorials/src&lt;plugins.tutorial.training{MaximumZProjectionPlugin.java"/>
     </selectedElements>
 </jardesc>

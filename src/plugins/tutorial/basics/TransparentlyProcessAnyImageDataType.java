@@ -75,10 +75,9 @@ public class TransparentlyProcessAnyImageDataType extends PluginActionable
 
         // Put the data back to the original image.
         // Convert the double data automatically to the data type of the image.
-        // image.getDataXY(0) return a reference on the internal data of the image.
-        Array1DUtil.doubleArrayToArray(dataBuffer, image.getDataXY(0));
+        Array1DUtil.doubleArrayToArray(dataBuffer, imageData);
 
-        // notify the data has changed (internal updates and view refresh)
-        image.dataChanged();
+        // just to let the image know the data has changed (internal updates and view refresh) and also to update cache for volatile image
+        image.setDataXY(0, imageData);
     }
 }

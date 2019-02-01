@@ -30,10 +30,9 @@ public class ModifyImagePlugin3 extends PluginActionable
         MathUtil.divide(doubleDataArray, 2d);
 
         // convert the double data array back to the original image data type
-        Array1DUtil.doubleArrayToSafeArray(doubleDataArray, image.getDataXY(0), image.isSignedDataType());
+        Array1DUtil.doubleArrayToSafeArray(doubleDataArray, dataArray, image.isSignedDataType());
 
-        // notify the image that its data has been modified
-        // (this actually trigger some internal recalculations and screen refresh)
-        image.dataChanged();
+        // just to let the image know the data has changed (internal updates and view refresh) and also to update cache for volatile image
+        image.setDataXY(0, dataArray);
     }
 }
